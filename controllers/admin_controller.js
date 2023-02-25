@@ -1,5 +1,6 @@
 const passport = require("passport");
 const Admin = require("../models/Admin");
+const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -36,7 +37,18 @@ const adminComicsView = (req, res) => {
 }
 
 const adminUserManagementView = (req, res) => {
-    res.render("admin/user_management", {pageName: "user_management"});
+
+    User.find({}, (err, foundUsers) => {
+        if(err) {
+            console.log(err);
+        } else {
+            if(foundUsers) {
+                res.render("admin/user_management", {pageName: "user_management", users: foundUsers});
+            }
+        }
+    });
+
+    
 }
 
 const adminManagementPost = (req, res) => {
@@ -114,6 +126,40 @@ const adminEdit = (req, res) => {
     })
 }
 
+const adminAddUser = (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    bcrypt.hash(password, saltRounds, (err, hash) => {
+        const newUser = new User({
+            email: email,
+            password: hash,
+        });
+
+        newUser.save((err) => {
+            if(err) {
+                console.log(err);
+            } else {
+                console.log("Successfully created new user");
+                res.redirect("/admin/dashboard/user-management");
+            }
+        });
+    })
+}
+
+const adminDeleteUser = (req, res) => {
+    const userId = req.params.userId;
+
+    User.findByIdAndRemove(userId, (err) => {
+        if(err) {
+            console.log(err);
+        } else {
+            console.log("Successfully deleted user with ID: ", userId);
+            res.redirect("/admin/dashboard/user-management");
+        }
+    })
+}
+
 module.exports = {
     adminLoginView,
     adminLoginPost,
@@ -125,4 +171,6 @@ module.exports = {
     adminLogout,
     adminDelete,
     adminEdit,
+    adminAddUser,
+    adminDeleteUser,
 }

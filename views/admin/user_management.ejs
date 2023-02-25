@@ -3,15 +3,81 @@
           <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
               <h1 class="h2">User Management</h1>
-              <div class="btn-toolbar mb-2 mb-md-0">
-                <div class="btn-group me-2">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+            </div>
+
+            <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addModal"><i class="fa-solid fa-plus"></i> Add User</button>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Email Address</th>
+                  <th scope="col">Created At</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <% users.forEach(user => { %>
+                  <tr>
+                    <th><%= user.email %></th>
+                    <th><%= user.createdAt.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) %></th>
+                    <th>
+                      <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<%= user._id %>"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </th>
+                  </tr>
+
+                  <div class="modal fade" id="delete<%= user._id %>" tabindex="-1" aria-labelledby="deleteUser" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">Delete User</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          Are you sure?
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <a class="btn btn-danger" href="/admin/dashboard/user-management/delete/<%= user._id %>"><i class="fa-solid fa-trash"></i> Delete</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% }) %>
+
+               
+              </tbody>
+            </table>
+
+
+            <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModal" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5">Add New User</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <form action="/admin/dashboard/user-management" method="post">
+                    <div class="modal-body">
+                      <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input class="form-control" type="email" name="email">
+                      </div>
+                      <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input class="form-control" type="password" name="password">
+                      </div>
+                      <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                        <input class="form-control" type="password" name="confirmPassword">
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-x"></i> Close</button>
+                      <button type="submit" class="btn btn-primary" disabled><i class="fa-solid fa-plus"></i> Add User</button>
+                    </div>
+                  </form>
                 </div>
-                <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                  <span data-feather="calendar" class="align-text-bottom"></span>
-                  This week
-                </button>
               </div>
             </div>
       

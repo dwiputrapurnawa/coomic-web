@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {adminDelete, adminLoginView, adminLogout, adminLoginPost, adminDashboardView, adminComicsView, adminManagementView, adminUserManagementView, adminManagementPost, adminEdit} = require("../controllers/admin_controller");
+const {adminDelete, adminLoginView, adminLogout, adminLoginPost, adminDashboardView, adminComicsView, adminManagementView, adminUserManagementView, adminManagementPost, adminEdit, adminAddUser, adminDeleteUser} = require("../controllers/admin_controller");
 
 router.use((req, res, next) => {
     console.log('Time: ', Date.now())
@@ -17,6 +17,8 @@ router.post("/dashboard/admin-management", adminManagementPost);
 router.get("/logout", adminLogout);
 router.get("/dashboard/admin-management/delete/:adminId", adminDelete);
 router.post("/dashboard/admin-management/edit", adminEdit);
+router.post("/dashboard/user-management", adminAddUser);
+router.get("/dashboard/user-management/delete/:userId", adminDeleteUser);
 
 
 module.exports = router;

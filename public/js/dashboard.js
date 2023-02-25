@@ -2,15 +2,16 @@ $(function() {
 
     $(".table").DataTable();
 
-    $("#addAdminModal input[name='password'], #addAdminModal input[name='confirmPassword']").on("change", function() {
-        if($("#addAdminModal input[name='password']").val() === $("#addAdminModal input[name='confirmPassword']").val()) {
-            $("#addAdminModal button[type='submit']").removeAttr("disabled")
-        } else if($("#addAdminModal input[name='password']").val() === "" && $("#addAdminModal input[name='confirmPassword']").val() === ""){
-            $("#addAdminModal button[type='submit']").attr("disabled", true)
+    $("#addModal input[name='password'], #addModal input[name='confirmPassword']").on("change", function() {
+        if($("#addModal input[name='password']").val() === $("#addModal input[name='confirmPassword']").val()) {
+            $("#addModal button[type='submit']").removeAttr("disabled")
+        } else if($("#addModal input[name='password']").val() === "" && $("#addModal input[name='confirmPassword']").val() === ""){
+            $("#addModal button[type='submit']").attr("disabled", true)
         } else {
-            $("#addAdminModal button[type='submit']").attr("disabled", true)
+            $("#addModal button[type='submit']").attr("disabled", true)
         }
     })
+
 
 
 })
