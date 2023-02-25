@@ -1,9 +1,9 @@
-<%- include("partials/login_header") %>
+<%- include("partials/register_header") %>
 
     <main class="form-signin w-100 m-auto">
-        <form action="/login" method="post">
+        <form action="/register" method="post">
           <img class="mb-4" src="/images/logo_white.png" alt="" width="150" height="50">
-          <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+          <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
       
           <div class="form-floating">
             <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
@@ -13,17 +13,20 @@
             <input type="password" class="form-control" id="password" name="password" placeholder="Password">
             <label for="password">Password</label>
           </div>
+          <div class="form-floating">
+            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
+            <label for="confirmPassword">Confirm Password</label>
+          </div>
       
           <div class="checkbox mb-3">
             <label>
               <input type="checkbox" value="remember-me"> Remember me
             </label>
           </div>
-          <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+          <button id="submitButton" class="w-100 btn btn-lg btn-primary" type="submit" disabled>Sign Up</button>
           <p id="date" class="mt-5 mb-3 text-muted"></p>
         </form>
-
-        <p>Doesn't have account ? <a href="/register">Sign Up here!</a></p>
+        <p>Already have account ? <a href="/login">Sign In here!</a></p>
       </main>
 
-<%- include("partials/login_footer") %>
+<%- include("partials/register_footer") %>

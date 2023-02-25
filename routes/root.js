@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {homePageView, loginPageView} = require("../controllers/controller");
+const {homePageView, loginPageView, loginUserPost, registerPageView, registerUserPost, logout} = require("../controllers/controller");
 
 router.use((req, res, next) => {
     console.log('Time: ', Date.now())
@@ -10,6 +10,10 @@ router.use((req, res, next) => {
 
 router.get("/", homePageView);
 router.get("/login", loginPageView);
+router.post("/login", loginUserPost);
+router.get("/register", registerPageView);
+router.post("/register", registerUserPost);
+router.get("/logout", logout);
 
 
 

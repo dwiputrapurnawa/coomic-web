@@ -11,17 +11,37 @@
           <div class="collapse navbar-collapse" id="navbarsExample05">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link <%= pageName === "home" ? "active" : null %>" aria-current="page" href="/">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Comics</a>
+                <a class="nav-link <%= pageName === "comics" ? "active" : null %>" href="/comics">Comics</a>
               </li>
             </ul>
 
-            <a href="/login" class="login-button">
-                <i class="fa-solid fa-right-to-bracket"></i>
-                Login
-            </a>
+           <div class="row">
+            <div class="col-lg-8">
+              <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+              </form>
+            </div>
+
+            <% if (user) { %>
+              <div class="col-lg-4 d-flex">
+                <a href="/logout" class="login-button"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+              </div>
+              <% } else { %>
+                <div class="col-lg-4 d-flex">
+                  <a href="/login" class="login-button"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+                </div>
+            <% } %>
+
+        
+             
+           
+           
+           
+           </div>
           </div>
         </div>
       </nav>

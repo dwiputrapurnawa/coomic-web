@@ -1,0 +1,120 @@
+<%- include("../partials/header") %>
+<%- include("../partials/navbar") %>
+
+
+<main class="container-xl">
+<div class="comic-container mt-5 row">
+    <h5>Comic List</h5>
+    <hr>
+
+    <div class="mb-3">
+        <div class="dropdown me-3" style="display: inline-block;">
+            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Genre All
+            </button>
+            <ul class="dropdown-menu">
+                <% genres.forEach(genre => { %>
+                    <li class="dropdown-item">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="<%= genre %>" name="genre" value="<%= genre %>">
+                            <label class="form-check-label" for="<%= genre %>"><%= genre %></label>
+                          </div>
+                        </li>
+                <% }) %>
+            </ul>
+          </div>
+
+          <div class="dropdown me-3" style="display: inline-block;">
+            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Status All
+            </button>
+            <ul class="dropdown-menu">
+               <% status.forEach(value => { %>
+                <li class="dropdown-item">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="status" id="<%= value %>" value="<%= value %>">
+                        <label class="form-check-label" for="<%= value %>"><%= value %></label>
+                    </div>
+                </li>
+               <% }) %>
+            </ul>
+          </div>
+          <div class="dropdown me-3" style="display: inline-block;">
+            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Type All
+            </button>
+            <ul class="dropdown-menu">
+                <% type.forEach(value => { %>
+                    <li class="dropdown-item">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="type" id="<%= value %>" value="<%= value %>">
+                            <label class="form-check-label" for="<%= value %>"><%= value %></label>
+                        </div>
+                    </li>
+                <% }) %>
+            </ul>
+          </div>
+          <div class="dropdown me-3" style="display: inline-block;">
+            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Order By
+            </button>
+            <ul class="dropdown-menu">
+              <% order.forEach(value => { %>
+                <li class="dropdown-item">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="order" id="<%= value %>" value="<%= value %>">
+                        <label class="form-check-label" for="<%= value %>"><%= value %></label>
+                    </div>
+                </li>
+            <% }) %>
+            </ul>
+          </div>
+
+          <input type="hidden" name="selectedGenre">
+          <input type="hidden" name="selectedStatus">
+          <input type="hidden" name="selectedType">
+          <input type="hidden" name="selectedOrder">
+
+          <button id="searchButton" class="btn btn-light" type="button" style="margin-left: 30px;"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+    </div>
+
+    <div class="col mb-3">
+        <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
+        <h5>Solo Leveling</h5>
+        <p>Chapter 20</p>
+        ⭐️⭐️⭐️⭐️⭐️
+    </div>
+    <div class="col mb-3">
+        <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
+        <h5>Solo Leveling</h5>
+        <p>Chapter 20</p>
+        ⭐️⭐️⭐️⭐️⭐️
+    </div>
+    <div class="col mb-3">
+        <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
+        <h5>Solo Leveling</h5>
+        <p>Chapter 20</p>
+        ⭐️⭐️⭐️⭐️⭐️
+    </div>
+    <div class="col mb-3">
+        <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
+        <h5>Solo Leveling</h5>
+        <p>Chapter 20</p>
+        ⭐️⭐️⭐️⭐️⭐️
+    </div>
+    <div class="col mb-3">
+        <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
+        <h5>Solo Leveling</h5>
+        <p>Chapter 20</p>
+        ⭐️⭐️⭐️⭐️⭐️
+    </div>
+    <div class="col mb-3">
+        <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
+        <h5>Solo Leveling</h5>
+        <p>Chapter 20</p>
+        ⭐️⭐️⭐️⭐️⭐️
+    </div>
+</div>
+</main>
+
+<%- include("../partials/footer") %>

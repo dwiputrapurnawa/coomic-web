@@ -37,18 +37,13 @@ body {
     padding-left: 10px;
 }
 
-.row.display-flex {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-.row.display-flex > [class*='col-'] {
-    display: flex;
-    flex-direction: column;
-  }
-
 .login-button {
   text-decoration: none;
+  color: gray;
+  padding: 5px;
+}
+
+.login-button:hover {
   color: white;
 }
   
