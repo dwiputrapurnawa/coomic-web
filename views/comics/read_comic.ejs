@@ -1,0 +1,109 @@
+<%- include("../partials/header") %>
+<%- include("../partials/navbar") %>
+
+<main class="container-xl">
+
+   <div class="read-chapter-container">
+
+    <h1 class="mb-3">
+        <%= comic.title %> Chapter
+        
+        <% comic.chapters.forEach(chapter => { %>
+         <% if (chapter.chapterPath === chapterPath) { %>
+            
+            <%= chapter.number %>
+
+         <% } %>
+        <% }) %>
+    </h1>
+    <hr>
+
+   <div class="mb-3 navigator-container row">
+    
+    <div class="col-lg left-align">
+        <select class="form-select" name="chapterSelect" id="chapterSelect">
+            <% comic.chapters.forEach(chapter => { %>
+             <option value="<%= chapter.chapterPath %>" <%= chapter.chapterPath === chapterPath ? "selected" : null %>>Chapter <%= chapter.number %></option>
+            <% }) %>
+        </select>
+    </div>
+
+   <div class="col-lg right-align">
+    <% for( let index = 0; index < comic.chapters.length; index++ ) { %>
+    
+        <% if (comic.chapters[index].chapterPath === chapterPath) { %>
+
+           <a class="btn btn-primary" href="/comics/<%= comic.titlePath %>/<%= comic.chapters[index === 0 ? index : index-1 ].chapterPath %>"><i class="fa-solid fa-angle-left"></i> Prev</a>
+           <a class="btn btn-primary" href="/comics/<%= comic.titlePath %>/<%= comic.chapters[index === comic.chapters.length-1 ? index : index+1 ].chapterPath %>">Next <i class="fa-solid fa-angle-right"></i></a>
+
+        <% } %>
+
+    <% } %>
+   </div>
+
+    <input type="hidden" name="titlePath" value="<%= comic.titlePath %>">
+   </div>
+
+    
+
+   <% comic.chapters.forEach(chapter => { %>
+
+    <% if (chapter.chapterPath === chapterPath) { %>
+
+        <% chapter.pages.forEach(page => { %>
+            <img src="<%= page.substring(7) %>" alt="">
+           <% }) %>
+       </div>
+
+    <% } %>
+
+   <% }) %>
+
+   <hr>
+   
+
+   <div class="mb-3 navigator-container row">
+    
+    <div class="col-lg left-align">
+        <select class="form-select" name="chapterSelect" id="chapterSelect">
+            <% comic.chapters.forEach(chapter => { %>
+             <option value="<%= chapter.chapterPath %>" <%= chapter.chapterPath === chapterPath ? "selected" : null %>>Chapter <%= chapter.number %></option>
+            <% }) %>
+        </select>
+    </div>
+
+   <div class="col-lg right-align">
+    <% for( let index = 0; index < comic.chapters.length; index++ ) { %>
+    
+        <% if (comic.chapters[index].chapterPath === chapterPath) { %>
+
+           <a class="btn btn-primary" href="/comics/<%= comic.titlePath %>/<%= comic.chapters[index === 0 ? index : index-1 ].chapterPath %>"><i class="fa-solid fa-angle-left"></i> Prev</a>
+           <a class="btn btn-primary" href="/comics/<%= comic.titlePath %>/<%= comic.chapters[index === comic.chapters.length-1 ? index : index+1 ].chapterPath %>">Next <i class="fa-solid fa-angle-right"></i></a>
+
+        <% } %>
+
+    <% } %>
+   </div>
+
+    <input type="hidden" name="titlePath" value="<%= comic.titlePath %>">
+   </div>
+
+
+   <div class="comic-container comment-margin-top">
+    <h2>Comments</h2>
+    <hr>
+
+   <div class="row">
+    <div class="col-lg-9">
+        <input class="form-control" type="text" name="comment" id="comment">
+    </div>
+    <div class="col-lg">
+        <button class="btn btn-primary w-100"><i class="fa-solid fa-comment"></i> Comment</button>
+    </div>
+   </div>
+</div>
+
+    
+</main>
+
+<%- include("../partials/footer") %>

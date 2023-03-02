@@ -46,6 +46,94 @@ body {
 .login-button:hover {
   color: white;
 }
+
+.chapter-container {
+  border: solid;
+  border-color: #36393d;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.chapter-container a {
+  text-decoration: none;
+  color: white;
+}
+
+.chapter-container:hover {
+  background-color: #36393d;
+}
+
+.chapter-overflow {
+  overflow: auto;
+  height: 30rem;
+}
+
+.label-comic {
+  background-color: red;
+  display: inline-block;
+  position: absolute;
+  padding: 0.5rem;
+
+}
+
+.custom-button {
+  text-align: center;
+  padding: 2rem;
+  display: block;
+  border-radius: 1rem;
+  text-decoration: none;
+  color: white;
+}
+
+.read-chapter-container {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.read-chapter-container img {
+  margin-bottom: 1rem;
+}
+
+.navigator-container {
+  text-align: start;
+}
+
+.navigator-container select {
+  display: inline-block;
+}
+
+.left-align {
+  text-align: left;
+}
+
+.left-align select {
+  width: 30%;
+}
+
+.right-align {
+  text-align: right;
+}
+
+.comment-margin-top {
+  margin-top: 10rem;
+}
+
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(200,200,200,1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color:#fff;
+  -webkit-box-shadow: inset 0 0 6px rgba(90,90,90,0.7);
+}
+
   
   /* CUSTOMIZE THE CAROUSEL
   -------------------------------------------------- */

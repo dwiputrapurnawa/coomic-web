@@ -12,6 +12,14 @@ $(function() {
         }
     })
 
+    $("#genres").tagEditor();
+
+    $("#thumbnail").on("change", function() {
+        $("#preview").attr("src", window.URL.createObjectURL(this.files[0]));
+
+        $("#preview ").removeAttr("hidden");
+    })
+
 
 
 })

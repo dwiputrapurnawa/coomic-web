@@ -1,120 +1,185 @@
 <%- include("../partials/header") %>
 <%- include("../partials/navbar") %>
 
-
-<main class="container-xl">
-<div class="comic-container mt-5 row">
-    <h5>Comic List</h5>
-    <hr>
-
-    <div class="mb-3">
-        <div class="dropdown me-3" style="display: inline-block;">
-            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Genre All
-            </button>
-            <ul class="dropdown-menu">
-                <% genres.forEach(genre => { %>
-                    <li class="dropdown-item">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="<%= genre %>" name="genre" value="<%= genre %>">
-                            <label class="form-check-label" for="<%= genre %>"><%= genre %></label>
-                          </div>
-                        </li>
-                <% }) %>
-            </ul>
-          </div>
-
-          <div class="dropdown me-3" style="display: inline-block;">
-            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Status All
-            </button>
-            <ul class="dropdown-menu">
-               <% status.forEach(value => { %>
-                <li class="dropdown-item">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="status" id="<%= value %>" value="<%= value %>">
-                        <label class="form-check-label" for="<%= value %>"><%= value %></label>
+<main class="container-xl my-3">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="comic-container row">
+                <div class="col-lg-6 mb-3">
+                    <div class="label-comic">
+                        <%= comic.type.toUpperCase() %>
                     </div>
-                </li>
-               <% }) %>
-            </ul>
-          </div>
-          <div class="dropdown me-3" style="display: inline-block;">
-            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Type All
-            </button>
-            <ul class="dropdown-menu">
-                <% type.forEach(value => { %>
-                    <li class="dropdown-item">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="type" id="<%= value %>" value="<%= value %>">
-                            <label class="form-check-label" for="<%= value %>"><%= value %></label>
+                    <img class="mb-3 w-100" style="display: block;" src="<%= comic.thumbnail.substring(7) %>" alt="" height="500" >
+                    <button class="btn btn-primary w-100"><i class="fa-solid fa-bookmark"></i> Bookmark</button>
+                </div>
+               <div class="col-lg-6">
+                    
+                    <h1><%= comic.title %></h1>
+                    <% comic.genres.forEach(genre => { %>
+                        <span class="badge bg-secondary mb-3"><%= genre.toUpperCase() %></span>
+                    <% }) %>
+                    <h6>Synopsis</h6>
+                   <p><%= comic.synopsis %></p>
+        
+                   <div class="row">
+                        <div class="col-lg">
+                            <h6>Author</h6>
+                            <p><%= comic.author %></p>
                         </div>
-                    </li>
-                <% }) %>
-            </ul>
-          </div>
-          <div class="dropdown me-3" style="display: inline-block;">
-            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Order By
-            </button>
-            <ul class="dropdown-menu">
-              <% order.forEach(value => { %>
-                <li class="dropdown-item">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="order" id="<%= value %>" value="<%= value %>">
-                        <label class="form-check-label" for="<%= value %>"><%= value %></label>
+        
+                        <div class="col-lg">
+                            <h6>Status</h6>
+                            <p><%= comic.status %></p>
+                        </div>
+        
+                        <div class="col-lg">
+                            <h6>Last Updated</h6>
+                            <p><%= comic.updatedAt.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) %></p>
+                        </div>
+        
+                        <div class="col-lg">
+                            <h6>Type</h6>
+                            <p><%= comic.type %></p>
+                        </div>
+                        
+                   </div>
+        
+                  
+        
+               </div>
+            </div>
+        
+            <div class="comic-container" id="readNow">
+                <h2>Chapters</h2>
+                <hr>
+        
+                <div class="row mb-3">
+                   <div class="col-lg-6 mb-3">
+                    <a class="btn btn-primary custom-button" href="">First Chapter</a>
+                   </div>
+                    <div class="col-lg-6 mb-3">
+                        <a class="btn btn-primary custom-button" href="">New Chapter</a>
                     </div>
-                </li>
-            <% }) %>
-            </ul>
-          </div>
+                </div>
+        
+                <div class="chapter-overflow">
 
-          <input type="hidden" name="selectedGenre">
-          <input type="hidden" name="selectedStatus">
-          <input type="hidden" name="selectedType">
-          <input type="hidden" name="selectedOrder">
+                    <% comic.chapters.reverse().forEach(chapter => { %>
+                        <div class="chapter-container mb-2 me-3">
+                            <a href="/comics/<%= comic.titlePath %>/<%= chapter.chapterPath %>">
+                                <h5>Chapter <%= chapter.number %></h5>
+                                <p><%= chapter.createdAt.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) %></p>
+                            </a>
+                        </div>
+                    <% }) %>
 
-          <button id="searchButton" class="btn btn-light" type="button" style="margin-left: 30px;"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
-    </div>
+                    
+                
+                </div>
+                
+                
+            </div>
+        
+            <div class="comic-container">
+                <h2>Comments</h2>
+                <hr>
+        
+               <div class="row">
+                <div class="col-lg-9">
+                    <input class="form-control" type="text" name="comment" id="comment">
+                </div>
+                <div class="col-lg">
+                    <button class="btn btn-primary w-100"><i class="fa-solid fa-comment"></i> Comment</button>
+                </div>
+               </div>
+            </div>
+        </div>
 
-    <div class="col mb-3">
-        <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
-        <h5>Solo Leveling</h5>
-        <p>Chapter 20</p>
-        ⭐️⭐️⭐️⭐️⭐️
+        <div class="col-lg">
+            <div class="comic-container">
+              <h5>Top Popular</h5>
+            <hr>
+
+            <div class="row">
+
+                <div class="col-lg-12 row">
+                    <div class="col-lg-4">
+                        <img src="/images/sololeveling.png" alt="" height="100px" width="100px" style="display: inline-block;">
+                    </div>
+                   <div class="col-lg-8">
+                    <h5>Solo Leveling</h5>
+                    ⭐️⭐️⭐️⭐️⭐️
+                    <p>Genres: Action, Adventure, Fantasy, tower</p>
+                   </div>
+                <hr>
+                </div>
+
+                <div class="col-lg-12 row">
+                    <div class="col-lg-4">
+                        <img src="/images/sololeveling.png" alt="" height="100px" width="100px" style="display: inline-block;">
+                    </div>
+                   <div class="col-lg-8">
+                    <h5>Solo Leveling</h5>
+                    ⭐️⭐️⭐️⭐️⭐️
+                    <p>Genres: Action, Adventure, Fantasy, tower</p>
+                   </div>
+                <hr>
+                </div>
+
+                <div class="col-lg-12 row">
+                    <div class="col-lg-4">
+                        <img src="/images/sololeveling.png" alt="" height="100px" width="100px" style="display: inline-block;">
+                    </div>
+                   <div class="col-lg-8">
+                    <h5>Solo Leveling</h5>
+                    ⭐️⭐️⭐️⭐️⭐️
+                    <p>Genres: Action, Adventure, Fantasy, tower</p>
+                   </div>
+                <hr>
+                </div>
+
+                
+                <div class="col-lg-12 row">
+                    <div class="col-lg-4">
+                        <img src="/images/sololeveling.png" alt="" height="100px" width="100px" style="display: inline-block;">
+                    </div>
+                   <div class="col-lg-8">
+                    <h5>Solo Leveling</h5>
+                    ⭐️⭐️⭐️⭐️⭐️
+                    <p>Genres: Action, Adventure, Fantasy, tower</p>
+                   </div>
+                <hr>
+                </div>
+
+                <div class="col-lg-12 row">
+                    <div class="col-lg-4">
+                        <img src="/images/sololeveling.png" alt="" height="100px" width="100px" style="display: inline-block;">
+                    </div>
+                   <div class="col-lg-8">
+                    <h5>Solo Leveling</h5>
+                    ⭐️⭐️⭐️⭐️⭐️
+                    <p>Genres: Action, Adventure, Fantasy, tower</p>
+                   </div>
+                <hr>
+                </div>
+
+                <div class="col-lg-12 row">
+                    <div class="col-lg-4">
+                        <img src="/images/sololeveling.png" alt="" height="100px" width="100px" style="display: inline-block;">
+                    </div>
+                   <div class="col-lg-8">
+                    <h5>Solo Leveling</h5>
+                    ⭐️⭐️⭐️⭐️⭐️
+                    <p>Genres: Action, Adventure, Fantasy, tower</p>
+                   </div>
+                <hr>
+                </div>
+
+            </div>
+
+            </div>
+        </div>
     </div>
-    <div class="col mb-3">
-        <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
-        <h5>Solo Leveling</h5>
-        <p>Chapter 20</p>
-        ⭐️⭐️⭐️⭐️⭐️
-    </div>
-    <div class="col mb-3">
-        <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
-        <h5>Solo Leveling</h5>
-        <p>Chapter 20</p>
-        ⭐️⭐️⭐️⭐️⭐️
-    </div>
-    <div class="col mb-3">
-        <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
-        <h5>Solo Leveling</h5>
-        <p>Chapter 20</p>
-        ⭐️⭐️⭐️⭐️⭐️
-    </div>
-    <div class="col mb-3">
-        <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
-        <h5>Solo Leveling</h5>
-        <p>Chapter 20</p>
-        ⭐️⭐️⭐️⭐️⭐️
-    </div>
-    <div class="col mb-3">
-        <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
-        <h5>Solo Leveling</h5>
-        <p>Chapter 20</p>
-        ⭐️⭐️⭐️⭐️⭐️
-    </div>
-</div>
 </main>
 
 <%- include("../partials/footer") %>

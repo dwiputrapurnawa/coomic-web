@@ -32,5 +32,13 @@ $(function() {
         $("input[name='selectedType']").val(typeSelected);
         $("input[name='selectedOrder']").val(orderSelected);
     })
+    
+
+    $("#chapterSelect").on("change", function() {
+
+        const titlePath = $("input[name='titlePath']").val();
+
+        window.location = "/comics/" + titlePath + "/" + $(this).val();
+    })
 
 })

@@ -1,0 +1,67 @@
+<%- include("../partials/dashboard_header") %> 
+ 
+          <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+              <h1 class="h2">Edit Comic - <%= comic.title %></h1>
+            </div>
+
+            <form action="/admin/dashboard/comics/edit-comic/<%= comic._id %>" method="post" enctype="multipart/form-data">
+
+                <img class="mb-3" id="preview" src="" alt="" hidden>
+
+                <div class="mb-3 row">
+                 <div class="col">
+                    <label for="title" class="form-label">Title</label>
+                    <input class="form-control" type="text" name="title" id="title" value="<%= comic.title %>">
+                 </div>
+
+                  <div class="col">
+                    <label for="thumbnail" class="form-label">Thumbnail</label>
+                    <input type="file" name="thumbnail" id="thumbnail" class="form-control">
+                    <input type="hidden" name="oldThumbnail" value="<%= comic.thumbnail %>">
+                  </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <div class="col">
+                        <label for="author" class="form-label">Author</label>
+                        <input type="text" class="form-control" name="author" id="author" value="<%= comic.author %>">
+                    </div>
+                    <div class="col">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" name="status" id="status">
+                            <option value="Ongoing" <%= comic.status === "Ongoing" ? "selected" : null %>>Ongoing</option>
+                            <option value="Complete" <%= comic.status === "Complete" ? "selected" : null %>>Complete</option>
+                            <option value="Hiatus" <%= comic.status === "Hiatus" ? "selected" : null %>>Hiatus</option>
+                            <option value="Dropped" <%= comic.status === "Dropped" ? "selected" : null %>>Dropped</option>
+                            <option value="Coming Soon" <%= comic.status === "Coming Soon" ? "selected" : null %>>Coming Soon</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <div class="col">
+                        <label for="genres" class="form-label">Genres</label>
+                        <input type="text" class="form-control" id="genres" name="genres" value="<%= comic.genres %>">
+                    </div>
+                    <div class="col">
+                        <label for="type" class="form-label">Type</label>
+                        <select class="form-select" name="type" id="type">
+                            <option value="Manga" <%= comic.type === "Manga" ? "selected" : null %>>Manga</option>
+                            <option value="Manhwa" <%= comic.type === "Manhwa" ? "selected" : null %>>Manhwa</option>
+                            <option value="Manhua" <%= comic.type === "Manhua" ? "selected" : null %>>Manhua</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="synopsis" class="form-label">Synopsis</label>
+                    <textarea class="form-control" name="synopsis" id="synopsis" cols="30" rows="10"><%= comic.synopsis %></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary mb-3"><i class="fa-solid fa-plus"></i> Add</button>
+  
+              </form>
+          </main>
+
+<%- include("../partials/dashboard_footer") %>  

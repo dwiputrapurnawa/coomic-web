@@ -3,18 +3,91 @@
           <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
               <h1 class="h2">Comics</h1>
-              <div class="btn-toolbar mb-2 mb-md-0">
-                <div class="btn-group me-2">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-                </div>
-                <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                  <span data-feather="calendar" class="align-text-bottom"></span>
-                  This week
-                </button>
-              </div>
             </div>
-      
+            <a class="btn btn-primary mb-3" href="/admin/dashboard/comics/add-comic"><i class="fa-solid fa-plus"></i> Add Comic</a>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Cover</th>
+                 <th scope="col">Title</th>
+                 <th scope="col">Genres</th>
+                 <th scope="col">Synopsis</th>
+                 <th scope="col">Author</th>
+                 <th scope="col">Status</th>
+                 <th scope="col">Type</th>
+                 <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% comics.forEach(comic => { %>
+                 <tr>
+                  <td><img width="150" height="150" src="<%= comic.thumbnail.substring(7) %>" alt=""></td>
+                  <td><%= comic.title %></td>
+                  <td><%= comic.genres %></td>
+                  <td><%= comic.synopsis.substring(0, 200) + " ..." %></td>
+                  <td><%= comic.author %></td>
+                  <td><%= comic.status %></td>
+                  <td><%= comic.type %></td>
+                  <td>
+                   <div class="row p-2">
+                    <a class="btn btn-primary col me-3 mb-3" href="/comics/<%= comic.titlePath %>"><i class="fa-sharp fa-solid fa-eye"></i> View</a>
+                    <button class="btn btn-primary col me-3 mb-3" data-bs-toggle="modal" data-bs-target="#addChapter<%= comic._id %>"><i class="fa-solid fa-plus"></i> Add Chapter</button>
+                    <a class="btn btn-success col me-3 mb-3" href="/admin/dashboard/comics/edit-comic/<%= comic._id %>"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+                    <button class="btn btn-danger col me-3 mb-3" data-bs-toggle="modal" data-bs-target="#delete<%= comic._id %>"><i class="fa-solid fa-trash"></i> Delete</button>
+                    
+                   </div>
+                  </td>
+                 </tr>
+
+                 <div class="modal fade" id="addChapter<%= comic.id %>" tabindex="-1" aria-labelledby="addChapter" aria-hidden="true">
+                 <form action="/admin/dashboard/comics/add-chapter/<%= comic._id %>" method="post" enctype="multipart/form-data">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5">Add Chapter</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                       <div class="mb-3">
+                        <label for="chapter" class="form-label">Chapter</label>
+                        <input type="number" name="chapter" id="chapter" class="form-control" min="<%= comic.chapters.length + 1 %>">
+                       </div>
+                       <div class="mb-3">
+                        <label for="pages" class="form-label">Pages</label>
+                        <input type="file" name="pages" id="pages" class="form-control" multiple>
+                       </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-x"></i> Close</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Chapter</button>
+                      </div>
+                    </div>
+                  </div>
+                 </form>
+                </div>
+
+                 <div class="modal fade" id="delete<%= comic._id %>" tabindex="-1" aria-labelledby="deleteComic" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5">Delete <%= comic.title %></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-x"></i> Close</button>
+                        <a class="btn btn-danger" href="/admin/dashboard/comics/delete/<%= comic._id %>"><i class="fa-solid fa-trash"></i> Delete</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% }) %>
+              </tbody>
+            </table>
+          
           </main>
 
 <%- include("../partials/dashboard_footer") %>  

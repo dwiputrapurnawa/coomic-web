@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 
-const chapterSchema = new mongoose.Schema({
-    numberOfChapter: Number,
-    pages: [],
-}, {timestamps: true});
+const {commentSchema} = require("./Comment");
+const {chapterSchema} = require("./Chapter");
 
 const comicSchema = new mongoose.Schema({
     title: {
@@ -12,25 +10,25 @@ const comicSchema = new mongoose.Schema({
     },
     titlePath: String,
     thumbnail: String,
-    synopsis: {
-        type: String,
-    },
+    synopsis: String,
     author: String,
     chapters: [chapterSchema],
     genres: [String],
     rating: {
         type: Number,
-        min: 1,
-        max: 6
+        min: 0,
+        max: 6,
+        default: 0
     },
     status: {
         type: String,
-        enum: ["Ongoing, Complete", "Hiatus", "Dropped", "Coming Soon"]
+        enum: ["Ongoing", "Complete", "Hiatus", "Dropped", "Coming Soon"]
     },
     type: {
         type: String,
         enum: ["Manga", "Manhwa", "Manhua"]
-    }
+    },
+    comments: [commentSchema]
 }, {timestamps: true});
 
 const Comic = mongoose.model("Comic", comicSchema);
