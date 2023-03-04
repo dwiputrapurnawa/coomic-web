@@ -1,15 +1,41 @@
-$(function() {
-    
+function setDateFooter() {
     let date = new Date();
     
-    $("#date").text("© " + date.getFullYear() + " Coomic, Inc")
+    $("#date").text("© " + date.getFullYear() + " Coomic, Inc");
+}
+
+
+$(function() {
+    
+
+    setDateFooter();
+
+
+
+    $("input[type=checkbox], input[type=radio]").on("click", function() {
+        
+        let checkboxChecked = $("input[type=checkbox]:checked")
+        let radioChecked = $("input[type=radio]:checked")
+
+        let totalChecked = checkboxChecked.length + radioChecked.length;
+
+        if(totalChecked === 4) {
+
+            $("#searchButton").removeAttr("disabled");
+            
+        } else {
+            $("#searchButton").attr("disabled", true)
+        }
+
+    })
+    
 
 
     $("#searchButton").on("click", function() {
         let genreSelected = [];
-        let statusSelected;
-        let typeSelected;
-        let orderSelected;
+        let statusSelected = "";
+        let typeSelected = "";
+        let orderSelected = "";
 
         $.each($("input[name='genre']:checked"), function () { 
              genreSelected.push($(this).val())
@@ -27,10 +53,11 @@ $(function() {
         orderSelected = $(this).val();
     });
 
-        $("input[name='selectedGenre']").val(genreSelected);
-        $("input[name='selectedStatus']").val(statusSelected);
-        $("input[name='selectedType']").val(typeSelected);
-        $("input[name='selectedOrder']").val(orderSelected);
+
+    const path = `?genres=${genreSelected}&status=${statusSelected}&type=${typeSelected}&order=${orderSelected}`;
+    
+    window.location.href = path
+    
     })
     
 
@@ -40,5 +67,11 @@ $(function() {
 
         window.location = "/comics/" + titlePath + "/" + $(this).val();
     })
+
+    $("#resetSearch").on("click", function(){
+
+        window.location.href = window.location.href.split("?")[0];
+    })
+
 
 })

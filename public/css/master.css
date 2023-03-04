@@ -5,6 +5,16 @@ body {
     background-color: #16151D;
 }
 
+
+h5 {
+  font-size: medium;
+}
+
+p {
+  text-align: justify;
+  font-size: small;
+}
+
 .comic-container {
   border-radius: 10px;
   background: #212529;
@@ -23,7 +33,14 @@ body {
 }
 
 .comic-item {
-    padding: 10px;
+  margin: auto;
+  padding: 10px;
+}
+
+.comic-item:hover {
+  background-color: #36393d;
+  color: white;
+  border-radius: 1rem;
 }
 
 .comic-item img {
@@ -31,10 +48,29 @@ body {
     height: 280px;
     vertical-align: top;
     display: inline;
+    border-radius: 10px;
 }
 
 .comic-item h5 {
     padding-left: 10px;
+}
+
+.link-chapter {
+  color: grey;
+  text-decoration: none;
+}
+
+.link-chapter:hover {
+  color: white;
+}
+
+.link-title-comic {
+  text-decoration: none;
+  color: white;
+}
+
+.link-title-comic:hover {
+  color: white;
 }
 
 .login-button {
@@ -118,6 +154,45 @@ body {
   margin-top: 10rem;
 }
 
+.capitalize::first-letter {
+  text-transform: capitalize;
+}
+
+.comic-list-item {
+  padding: 1rem;
+  text-decoration: none;
+  color: white;
+}
+
+
+.comic-list-item:hover {
+  background-color: #36393d;
+  color: white;
+  border-radius: 1rem;
+}
+
+.top-popular-item {
+  padding: 10px;
+  margin: auto;
+}
+
+.top-popular-item img {
+  border-radius: 10px;
+}
+
+.latest-update-container {
+  padding: 1rem;
+}
+
+.top-popular-item:hover {
+  background-color: #36393d;
+  color: white;
+  border-radius: 10px;
+}
+
+.rating {
+  display: block;
+}
 
 ::-webkit-scrollbar {
   width: 12px;
@@ -152,6 +227,7 @@ body {
   .carousel-item {
     height: 32rem;
   }
+  
   
   
   /* MARKETING CONTENT

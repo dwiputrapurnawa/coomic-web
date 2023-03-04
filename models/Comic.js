@@ -17,7 +17,7 @@ const comicSchema = new mongoose.Schema({
     rating: {
         type: Number,
         min: 0,
-        max: 6,
+        max: 10,
         default: 0
     },
     status: {

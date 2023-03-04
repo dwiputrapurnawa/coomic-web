@@ -14,7 +14,7 @@
                 </div>
                <div class="col-lg-6">
                     
-                    <h1><%= comic.title %></h1>
+                    <h5><%= comic.title %></h5>
                     <% comic.genres.forEach(genre => { %>
                         <span class="badge bg-secondary mb-3"><%= genre.toUpperCase() %></span>
                     <% }) %>
@@ -22,24 +22,24 @@
                    <p><%= comic.synopsis %></p>
         
                    <div class="row">
-                        <div class="col-lg">
+                        <div class="col-lg-6">
                             <h6>Author</h6>
-                            <p><%= comic.author %></p>
+                            <span class="badge bg-secondary mb-3"><%= comic.author %></span>
                         </div>
         
-                        <div class="col-lg">
+                        <div class="col-lg-6">
                             <h6>Status</h6>
-                            <p><%= comic.status %></p>
+                            <span class="badge bg-secondary mb-3"><%= comic.status %></span>
                         </div>
         
-                        <div class="col-lg">
+                        <div class="col-lg-6">
                             <h6>Last Updated</h6>
-                            <p><%= comic.updatedAt.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) %></p>
+                            <span class="badge bg-secondary mb-3"><%= comic.updatedAt.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) %></span>
                         </div>
         
-                        <div class="col-lg">
+                        <div class="col-lg-6">
                             <h6>Type</h6>
-                            <p><%= comic.type %></p>
+                            <span class="badge bg-secondary mb-3"><%= comic.type %></span>
                         </div>
                         
                    </div>
@@ -50,15 +50,15 @@
             </div>
         
             <div class="comic-container" id="readNow">
-                <h2>Chapters</h2>
+                <h4>Chapters</h4>
                 <hr>
         
                 <div class="row mb-3">
                    <div class="col-lg-6 mb-3">
-                    <a class="btn btn-primary custom-button" href="">First Chapter</a>
+                    <a class="btn btn-primary custom-button" href="/comics/<%= comic.titlePath %>/<%= comic.chapters[0].chapterPath %>">First Chapter</a>
                    </div>
                     <div class="col-lg-6 mb-3">
-                        <a class="btn btn-primary custom-button" href="">New Chapter</a>
+                        <a class="btn btn-primary custom-button" href="/comics/<%= comic.titlePath %>/<%= comic.chapters[comic.chapters.length-1].chapterPath %>">New Chapter</a>
                     </div>
                 </div>
         
@@ -67,8 +67,18 @@
                     <% comic.chapters.reverse().forEach(chapter => { %>
                         <div class="chapter-container mb-2 me-3">
                             <a href="/comics/<%= comic.titlePath %>/<%= chapter.chapterPath %>">
-                                <h5>Chapter <%= chapter.number %></h5>
-                                <p><%= chapter.createdAt.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) %></p>
+                                <div class="row">
+                                    <div class="col-lg-10">
+                                        <h5>Chapter <%= chapter.number %></h5>
+                                        <p><%= chapter.createdAt.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) %></p>
+                                    </div>
+
+                                    <div class="col-lg">
+                                        <p><%= moment(chapter.createdAt).fromNow() %></p>
+                                    </div>
+                                </div>
+
+                                
                             </a>
                         </div>
                     <% }) %>
@@ -81,7 +91,7 @@
             </div>
         
             <div class="comic-container">
-                <h2>Comments</h2>
+                <h4>Comments</h4>
                 <hr>
         
                <div class="row">
@@ -102,80 +112,30 @@
 
             <div class="row">
 
-                <div class="col-lg-12 row">
-                    <div class="col-lg-4">
-                        <img src="/images/sololeveling.png" alt="" height="100px" width="100px" style="display: inline-block;">
-                    </div>
-                   <div class="col-lg-8">
-                    <h5>Solo Leveling</h5>
-                    ⭐️⭐️⭐️⭐️⭐️
-                    <p>Genres: Action, Adventure, Fantasy, tower</p>
-                   </div>
-                <hr>
-                </div>
-
-                <div class="col-lg-12 row">
-                    <div class="col-lg-4">
-                        <img src="/images/sololeveling.png" alt="" height="100px" width="100px" style="display: inline-block;">
-                    </div>
-                   <div class="col-lg-8">
-                    <h5>Solo Leveling</h5>
-                    ⭐️⭐️⭐️⭐️⭐️
-                    <p>Genres: Action, Adventure, Fantasy, tower</p>
-                   </div>
-                <hr>
-                </div>
-
-                <div class="col-lg-12 row">
-                    <div class="col-lg-4">
-                        <img src="/images/sololeveling.png" alt="" height="100px" width="100px" style="display: inline-block;">
-                    </div>
-                   <div class="col-lg-8">
-                    <h5>Solo Leveling</h5>
-                    ⭐️⭐️⭐️⭐️⭐️
-                    <p>Genres: Action, Adventure, Fantasy, tower</p>
-                   </div>
-                <hr>
-                </div>
-
-                
-                <div class="col-lg-12 row">
-                    <div class="col-lg-4">
-                        <img src="/images/sololeveling.png" alt="" height="100px" width="100px" style="display: inline-block;">
-                    </div>
-                   <div class="col-lg-8">
-                    <h5>Solo Leveling</h5>
-                    ⭐️⭐️⭐️⭐️⭐️
-                    <p>Genres: Action, Adventure, Fantasy, tower</p>
-                   </div>
-                <hr>
-                </div>
-
-                <div class="col-lg-12 row">
-                    <div class="col-lg-4">
-                        <img src="/images/sololeveling.png" alt="" height="100px" width="100px" style="display: inline-block;">
-                    </div>
-                   <div class="col-lg-8">
-                    <h5>Solo Leveling</h5>
-                    ⭐️⭐️⭐️⭐️⭐️
-                    <p>Genres: Action, Adventure, Fantasy, tower</p>
-                   </div>
-                <hr>
-                </div>
-
-                <div class="col-lg-12 row">
-                    <div class="col-lg-4">
-                        <img src="/images/sololeveling.png" alt="" height="100px" width="100px" style="display: inline-block;">
-                    </div>
-                   <div class="col-lg-8">
-                    <h5>Solo Leveling</h5>
-                    ⭐️⭐️⭐️⭐️⭐️
-                    <p>Genres: Action, Adventure, Fantasy, tower</p>
-                   </div>
-                <hr>
-                </div>
-
-            </div>
+                <% topPopular.forEach(comic => { %>
+                  <div class="col-lg-12 row top-popular-item">
+                      <div class="col-lg-4">
+                          <img src="<%= comic.thumbnail.substring(7) %>" alt="" width="100" height="150" style="display: inline-block;">
+                      </div>
+                     <div class="col-lg-8">
+                      <h5><a class="link-title-comic" href="/comics/<%= comic.titlePath %>"><%= comic.title.length > 50 ? comic.title.substring(0, 50) + "..." : comic.title %></a></h5>
+  
+                     <div class="rating mb-3">
+                      <% for( let index = 0; index < comic.rating; index++ ) { %>
+                        <i class="fa-solid fa-star"></i>
+                      <% } %>
+                     </div>
+  
+                      <% comic.genres.forEach(genre => { %>
+                          <span class="badge bg-secondary"><%= genre %></span>
+                      <% }) %>
+                     </div>
+                  
+                  </div>
+                  <hr>
+              <% }) %>
+  
+              </div>
 
             </div>
         </div>

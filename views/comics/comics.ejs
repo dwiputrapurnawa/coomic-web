@@ -4,7 +4,7 @@
 
 <main class="container-xl">
 <div class="comic-container mt-5 row">
-    <h5>Comic List</h5>
+    <h2>Comic List</h2>
     <hr>
 
     <div class="mb-3">
@@ -17,7 +17,7 @@
                     <li class="dropdown-item">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" id="<%= genre %>" name="genre" value="<%= genre %>">
-                            <label class="form-check-label" for="<%= genre %>"><%= genre %></label>
+                            <label class="form-check-label capitalize" for="<%= genre %>"><%= genre %></label>
                           </div>
                         </li>
                 <% }) %>
@@ -70,50 +70,20 @@
             </ul>
           </div>
 
-          <input type="hidden" name="selectedGenre">
-          <input type="hidden" name="selectedStatus">
-          <input type="hidden" name="selectedType">
-          <input type="hidden" name="selectedOrder">
-
-          <button id="searchButton" class="btn btn-light" type="button" style="margin-left: 30px;"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+          <button id="searchButton" class="btn btn-light" type="button" style="margin-left: 30px;" disabled><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+          <button id="resetSearch" class="btn btn-light" href=""><i class="fa-solid fa-trash-can-arrow-up"></i> Reset Search</button>
     </div>
 
-    <div class="col mb-3">
-        <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
-        <h5>Solo Leveling</h5>
-        <p>Chapter 20</p>
-        ⭐️⭐️⭐️⭐️⭐️
-    </div>
-    <div class="col mb-3">
-        <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
-        <h5>Solo Leveling</h5>
-        <p>Chapter 20</p>
-        ⭐️⭐️⭐️⭐️⭐️
-    </div>
-    <div class="col mb-3">
-        <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
-        <h5>Solo Leveling</h5>
-        <p>Chapter 20</p>
-        ⭐️⭐️⭐️⭐️⭐️
-    </div>
-    <div class="col mb-3">
-        <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
-        <h5>Solo Leveling</h5>
-        <p>Chapter 20</p>
-        ⭐️⭐️⭐️⭐️⭐️
-    </div>
-    <div class="col mb-3">
-        <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
-        <h5>Solo Leveling</h5>
-        <p>Chapter 20</p>
-        ⭐️⭐️⭐️⭐️⭐️
-    </div>
-    <div class="col mb-3">
-        <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
-        <h5>Solo Leveling</h5>
-        <p>Chapter 20</p>
-        ⭐️⭐️⭐️⭐️⭐️
-    </div>
+    <% comics.forEach(comic => { %>
+      <a class="col-lg-3 mb-3 comic-list-item" href="<%= comic.titlePath %>">
+        <img src="<%= comic.thumbnail.substring(7) %>" width="200px" height="250px" alt="">
+        <h5><%= comic.title %></h5>
+        <p>Chapter <%= comic.chapters[comic.chapters.length-1].number %></p>
+        <h6><%= comic.status %></h6>
+      </a>
+    <% }) %>
+    
+  
 </div>
 </main>
 

@@ -2,16 +2,37 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 const User = require("../models/User");
+const {Comic} = require("../models/Comic");
 const passport = require("passport");
+const moment = require("moment")
 
 const homePageView = (req, res) => {
-    console.log(req.user);
 
-    if(req.user) {
-        res.render("home", {pageName: "home", user: req.user});
-    } else {
-        res.render("home", {pageName: "home", user: null});
-    }
+    Comic.find({}, (err, topPopular) => {
+        if(err) {
+            console.log(err);
+        } else {
+            if(topPopular) {
+                Comic.find({}, (err, comics) => {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        if(comics) {
+                            if(req.user) {
+                                res.render("home", {pageName: "home", user: req.user, comics: comics, moment: moment, topPopular: topPopular});
+                            } else {
+                                res.render("home", {pageName: "home", user: null, comics: comics, moment: moment, topPopular: topPopular});
+                            }
+                        }
+                    }
+                }).sort({updatedAt: -1});
+            }
+        }
+    }).sort({rating: -1}).limit(5);
+
+    
+
+   
 };
 
 const loginPageView = (req, res) => {

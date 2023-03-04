@@ -24,7 +24,11 @@
                  <tr>
                   <td><img width="150" height="150" src="<%= comic.thumbnail.substring(7) %>" alt=""></td>
                   <td><%= comic.title %></td>
-                  <td><%= comic.genres %></td>
+                  <td>
+                    <% comic.genres.forEach(genre => { %>
+                      <span class="badge bg-secondary"><%= genre %></span>
+                    <% }) %>
+                  </td>
                   <td><%= comic.synopsis.substring(0, 200) + " ..." %></td>
                   <td><%= comic.author %></td>
                   <td><%= comic.status %></td>

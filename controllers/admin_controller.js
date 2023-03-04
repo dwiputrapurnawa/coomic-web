@@ -62,8 +62,19 @@ const adminLoginPost = (req, res) => {
     });
 }
 
-const adminDashboardView = (req, res) => {
-    res.render("admin/dashboard", {pageName: "dashboard"});
+const adminDashboardView = async (req, res)  => {
+
+    try {
+
+    const comicCount = await Comic.countDocuments({});
+    const chapterCount = await Chapter.countDocuments({});
+    const userCount = await User.countDocuments({});
+
+
+    res.render("admin/dashboard", {pageName: "dashboard", comicCount: comicCount, chapterCount: chapterCount, userCount: userCount});
+    } catch(err) {
+        console.log(err);
+    }
 }
 
 const adminComicsView = (req, res) => {

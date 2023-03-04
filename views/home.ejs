@@ -55,7 +55,7 @@
 <main class="container-xl">
 
 
-    <div class="comic-container row">
+    <!-- <div class="comic-container row">
         <h5>Popular Today</h2>
         <hr>
        <div class="col">
@@ -89,7 +89,7 @@
             ⭐️⭐️⭐️⭐️⭐️
         </div>
         
-    </div>
+    </div> -->
 
     <div class="row">
         <div class="col-lg-8 me-2">
@@ -97,31 +97,28 @@
               <h5>Latest Updated</h5>
             <hr>
         
-            <div class="row">
-                <div class="col-lg-6 comic-item">
-                    <img src="/images/sololeveling.png" alt="">
-                    <div style="display: inline-block;">
-                        <h5 >Solo Leveling</h5>
-                    <ul>
-                        <li>Chapter 1<p>10 hours ago</p></li>
-                        <li>Chapter 1<p>10 hours ago</p></li>
-                        <li>Chapter 1<p>10 hours ago</p></li>
-                        <li>Chapter 1<p>10 hours ago</p></li>
-                    </ul>
-                    </div>
-                </div>
-                <div class="col-lg-6 comic-item">
-                    <img src="/images/sololeveling.png" alt="">
-                    <div style="display: inline-block;">
-                        <h5 >Solo Leveling</h5>
-                    <ul>
-                        <li>Chapter 1<p>10 hours ago</p></li>
-                        <li>Chapter 1<p>10 hours ago</p></li>
-                        <li>Chapter 1<p>10 hours ago</p></li>
-                        <li>Chapter 1<p>10 hours ago</p></li>
-                    </ul>
-                    </div>
-                </div>
+            <div class="row latest-update-container">
+
+              <% comics.forEach(comic => { %>
+
+                <div class="col-lg comic-item row mb-3">
+                  <div class="col-lg">
+                    <img src="<%= comic.thumbnail.substring(7) %>" alt="">
+                  </div>
+                  <div class="col-lg">
+                      <h5><a class="link-title-comic" href="/comics/<%= comic.titlePath %>"><%= comic.title.length > 50 ? comic.title.substring(0, 50) + "..." : comic.title %></a></h5>
+                  <ul>
+
+                    <% comic.chapters.reverse().forEach(chapter => { %>
+                      <li><a class="link-chapter" href="/comics/<%= comic.titlePath %>/<%= chapter.chapterPath %>">Chapter <%= chapter.number %></a><p id="postDate"><%= moment(chapter.createdAt).fromNow() %></p></li>
+                    <% }) %>
+                    
+                  </ul>
+                  </div>
+              </div>
+               
+              <% }) %>
+
             </div>
             
             </div>
@@ -136,78 +133,28 @@
 
             <div class="row">
 
-                <div class="col-lg-12 row">
+              <% topPopular.forEach(comic => { %>
+                <div class="col-lg-12 row top-popular-item">
                     <div class="col-lg-4">
-                        <img src="/images/sololeveling.png" alt="" height="100px" width="100px" style="display: inline-block;">
+                        <img src="<%= comic.thumbnail.substring(7) %>" alt="" width="100" height="150" style="display: inline-block;">
                     </div>
                    <div class="col-lg-8">
-                    <h5>Solo Leveling</h5>
-                    ⭐️⭐️⭐️⭐️⭐️
-                    <p>Genres: Action, Adventure, Fantasy, tower</p>
-                   </div>
-                <hr>
-                </div>
+                    <h5><a class="link-title-comic" href="/comics/<%= comic.titlePath %>"><%= comic.title.length > 50 ? comic.title.substring(0, 50) + "..." : comic.title %></a></h5>
 
-                <div class="col-lg-12 row">
-                    <div class="col-lg-4">
-                        <img src="/images/sololeveling.png" alt="" height="100px" width="100px" style="display: inline-block;">
-                    </div>
-                   <div class="col-lg-8">
-                    <h5>Solo Leveling</h5>
-                    ⭐️⭐️⭐️⭐️⭐️
-                    <p>Genres: Action, Adventure, Fantasy, tower</p>
+                   <div class="rating mb-3">
+                    <% for( let index = 0; index < comic.rating; index++ ) { %>
+                      <i class="fa-solid fa-star"></i>
+                    <% } %>
                    </div>
-                <hr>
-                </div>
 
-                <div class="col-lg-12 row">
-                    <div class="col-lg-4">
-                        <img src="/images/sololeveling.png" alt="" height="100px" width="100px" style="display: inline-block;">
-                    </div>
-                   <div class="col-lg-8">
-                    <h5>Solo Leveling</h5>
-                    ⭐️⭐️⭐️⭐️⭐️
-                    <p>Genres: Action, Adventure, Fantasy, tower</p>
+                    <% comic.genres.forEach(genre => { %>
+                        <span class="badge bg-secondary"><%= genre %></span>
+                    <% }) %>
                    </div>
-                <hr>
-                </div>
-
                 
-                <div class="col-lg-12 row">
-                    <div class="col-lg-4">
-                        <img src="/images/sololeveling.png" alt="" height="100px" width="100px" style="display: inline-block;">
-                    </div>
-                   <div class="col-lg-8">
-                    <h5>Solo Leveling</h5>
-                    ⭐️⭐️⭐️⭐️⭐️
-                    <p>Genres: Action, Adventure, Fantasy, tower</p>
-                   </div>
-                <hr>
                 </div>
-
-                <div class="col-lg-12 row">
-                    <div class="col-lg-4">
-                        <img src="/images/sololeveling.png" alt="" height="100px" width="100px" style="display: inline-block;">
-                    </div>
-                   <div class="col-lg-8">
-                    <h5>Solo Leveling</h5>
-                    ⭐️⭐️⭐️⭐️⭐️
-                    <p>Genres: Action, Adventure, Fantasy, tower</p>
-                   </div>
                 <hr>
-                </div>
-
-                <div class="col-lg-12 row">
-                    <div class="col-lg-4">
-                        <img src="/images/sololeveling.png" alt="" height="100px" width="100px" style="display: inline-block;">
-                    </div>
-                   <div class="col-lg-8">
-                    <h5>Solo Leveling</h5>
-                    ⭐️⭐️⭐️⭐️⭐️
-                    <p>Genres: Action, Adventure, Fantasy, tower</p>
-                   </div>
-                <hr>
-                </div>
+            <% }) %>
 
             </div>
 
