@@ -12,23 +12,23 @@
                 <div class="mb-3 row">
                  <div class="col">
                     <label for="title" class="form-label">Title</label>
-                    <input class="form-control" type="text" name="title" id="title">
+                    <input class="form-control" type="text" name="title" id="title" required>
                  </div>
 
                   <div class="col">
                     <label for="thumbnail" class="form-label">Thumbnail</label>
-                    <input type="file" name="thumbnail" id="thumbnail" class="form-control">
+                    <input type="file" name="thumbnail" id="thumbnail" class="form-control" required>
                   </div>
                 </div>
 
                 <div class="mb-3 row">
                     <div class="col">
                         <label for="author" class="form-label">Author</label>
-                        <input type="text" class="form-control" name="author" id="author">
+                        <input type="text" class="form-control" name="author" id="author" required>
                     </div>
                     <div class="col">
                         <label for="status" class="form-label">Status</label>
-                        <select class="form-select" name="status" id="status">
+                        <select class="form-select" name="status" id="status" required>
                             <option value="Ongoing">Ongoing</option>
                             <option value="Complete">Complete</option>
                             <option value="Hiatus">Hiatus</option>
@@ -41,11 +41,11 @@
                 <div class="mb-3 row">
                     <div class="col">
                         <label for="genres" class="form-label">Genres</label>
-                        <input type="text" class="form-control" id="genres" name="genres">
+                        <input type="text" class="form-control" id="genres" name="genres" required>
                     </div>
                     <div class="col">
                         <label for="type" class="form-label">Type</label>
-                        <select class="form-select" name="type" id="type">
+                        <select class="form-select" name="type" id="type" required>
                             <option value="Manga">Manga</option>
                             <option value="Manhwa">Manhwa</option>
                             <option value="Manhua">Manhua</option>

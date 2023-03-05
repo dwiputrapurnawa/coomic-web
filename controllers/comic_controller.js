@@ -1,5 +1,6 @@
 const {Comic} = require("../models/Comic");
 const {Chapter} = require("../models/Chapter");
+const User = require("../models/User");
 const moment = require("moment");
 
 const comicPageView = (req, res) => {
@@ -89,8 +90,25 @@ const singlePageComicView = (req, res) => {
                         console.log(err);
                     } else {
                         if(foundComic) {
+
+
                             if(req.user) {
-                                res.render("comics/comic", {pageName: "comics", comic: foundComic,  user: req.user, topPopular: topPopular, moment: moment});
+
+                                if(req.user.role === "User") {
+                                    User.findById(req.user.id, (err, user) => {
+                                        if(err) {
+                                            console.log(err);
+                                        } else {
+                                            if(user) {
+                                                res.render("comics/comic", {pageName: "comics", comic: foundComic,  user: user, topPopular: topPopular, moment: moment});
+                                            }
+                                        }
+                                    })
+                                } else {
+                                    res.render("comics/comic", {pageName: "comics", comic: foundComic,  user: null, topPopular: topPopular, moment: moment});
+                                }
+                               
+
                             } else {
                                 res.render("comics/comic", {pageName: "comics", comic: foundComic,  user: null, topPopular: topPopular, moment: moment});
                             }
@@ -120,8 +138,72 @@ const readComicView = (req, res) => {
 
 }
 
+const addBookmark = (req, res) => {
+
+    const comicId = req.body.comicId;
+
+    Comic.findById(comicId, (err, comic) => {
+        if(err) {
+            console.log(err);
+        } else {
+            if(comic) {
+
+                console.log("Comic exist");
+
+                if(req.user) {
+
+                    if(req.user.id) {
+
+                        const userId = req.user.id;
+
+                        User.findById(userId, (err, user) => {
+                            if(err) {
+                                console.log(err);
+                            } else {
+                                if(user) {
+
+                                    if(user.bookmark.findIndex((bookmarkComic) => bookmarkComic.title === comic.title) === -1) {
+                                        user.bookmark.push(comic);
+                                        user.save((err) => {
+                                            if(err) {
+                                                console.log(err);
+                                            } else {
+                                                res.redirect("/comics/" + comic.titlePath);
+                                            }
+                                        });
+                                    } else {
+                                        const indexComic = user.bookmark.findIndex((bookmarkComic) => bookmarkComic.title === comic.title);
+                                        user.bookmark.splice(indexComic, 1);
+                                        user.save((err) => {
+                                            if(err) {
+                                                console.log(err);
+                                            } else {
+                                                res.redirect("/comics/" + comic.titlePath);
+                                            }
+                                        });
+                                    }
+
+                                    
+                                }
+                            }
+                        })
+                    }
+                } else {
+                    res.redirect("/login")
+                }
+                
+                
+
+            } else {
+                console.log("Comic doesnt exist");
+            }
+        }
+    })
+}
+
 module.exports = {
     comicPageView,
     singlePageComicView,
     readComicView,
+    addBookmark,
 }

@@ -70,8 +70,11 @@ const adminDashboardView = async (req, res)  => {
     const chapterCount = await Chapter.countDocuments({});
     const userCount = await User.countDocuments({});
 
+    const chapters = await Chapter.find({}).sort({createdAt: -1});
 
-    res.render("admin/dashboard", {pageName: "dashboard", comicCount: comicCount, chapterCount: chapterCount, userCount: userCount});
+
+    res.render("admin/dashboard", {pageName: "dashboard", comicCount: comicCount, chapterCount: chapterCount, userCount: userCount, chapters: chapters});
+
     } catch(err) {
         console.log(err);
     }
@@ -189,6 +192,7 @@ const adminAddUser = (req, res) => {
         const newUser = new User({
             email: email,
             password: hash,
+            role: "User"
         });
 
         newUser.save((err) => {
@@ -388,6 +392,7 @@ const adminAddChapter = (req, res) => {
                         });
 
                         const newChapter = new Chapter({
+                            comicTitle: foundComic.title,
                             number: chapter,
                             chapterPath: _.kebabCase(foundComic.title + "Chapter" + chapter),
                             pages: pagesPath,

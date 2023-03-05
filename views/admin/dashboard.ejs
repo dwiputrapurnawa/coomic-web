@@ -5,7 +5,7 @@
               <h1 class="h2">Dashboard</h1>
             </div>
 
-            <div class="row">
+            <div class="row mb-3">
               
               <div class="col-lg dashboard-container">
                 <div class="row">
@@ -53,6 +53,28 @@
 
 
             </div>
+
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Comic</th>
+                  <th scope="col">Chapter</th>
+                  <th scope="col">Comments</th>
+                  <th scope="col">Reactions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% chapters.forEach(chapter => { %>
+                  <tr>
+                    <td><%= chapter.comicTitle %></td>
+                    <td><%= chapter.number %></td>
+                    <td><%= chapter.comments.length %></td>
+                    <td><%= chapter.reactions.length %></td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
       
           </main>
 

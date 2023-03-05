@@ -10,7 +10,31 @@
                         <%= comic.type.toUpperCase() %>
                     </div>
                     <img class="mb-3 w-100" style="display: block;" src="<%= comic.thumbnail.substring(7) %>" alt="" height="500" >
-                    <button class="btn btn-primary w-100"><i class="fa-solid fa-bookmark"></i> Bookmark</button>
+                    
+                    <form action="/comics/add-bookmark" method="post">
+                        <input type="hidden" name="comicId" value="<%= comic._id %>">
+                        <button type="submit" class="btn btn-primary w-100" >
+
+                            <% if (user) { %>
+                             
+                                <% if (user.bookmark.findIndex((bookmarkComic) => bookmarkComic.title === comic.title) === -1) { %>
+                                    <i class="fa-regular fa-bookmark"></i> Bookmark
+
+                                <% } else { %>
+                                    <i class="fa-solid fa-bookmark"></i> Bookmarked</button>
+                                <% } %>
+
+                            <% } else { %>
+                                <i class="fa-regular fa-bookmark"></i> Bookmark
+                            <% } %>
+
+                           
+                             
+                            
+                            
+                            
+                    </form>
+                    
                 </div>
                <div class="col-lg-6">
                     

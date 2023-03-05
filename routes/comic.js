@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {comicPageView, singlePageComicView, readComicView} = require("../controllers/comic_controller");
+const {comicPageView, singlePageComicView, readComicView, addBookmark} = require("../controllers/comic_controller");
 
 
 router.use((req, res, next) => {
@@ -11,5 +11,6 @@ router.use((req, res, next) => {
 router.get("/", comicPageView);
 router.get("/:titlePath", singlePageComicView);
 router.get("/:titlePath/:chapterPath", readComicView);
+router.post("/add-bookmark", addBookmark);
 
 module.exports = router;
