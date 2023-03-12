@@ -5,6 +5,10 @@ body {
     background-color: #16151D;
 }
 
+h4 {
+  font-size: small;
+}
+
 
 h5 {
   font-size: medium;
@@ -192,6 +196,24 @@ p {
 
 .rating {
   display: block;
+}
+
+.comment {
+  margin: 0;
+}
+
+.rating-modal-container {
+  color: black;
+  text-align: center;
+}
+
+.account {
+  margin-top: 5px;
+  display: inline-block;
+}
+
+.button-search {
+  text-align: right;
 }
 
 ::-webkit-scrollbar {

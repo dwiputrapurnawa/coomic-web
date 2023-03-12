@@ -11,37 +11,86 @@
                     </div>
                     <img class="mb-3 w-100" style="display: block;" src="<%= comic.thumbnail.substring(7) %>" alt="" height="500" >
                     
-                    <form action="/comics/add-bookmark" method="post">
-                        <input type="hidden" name="comicId" value="<%= comic._id %>">
-                        <button type="submit" class="btn btn-primary w-100" >
-
-                            <% if (user) { %>
-                             
-                                <% if (user.bookmark.findIndex((bookmarkComic) => bookmarkComic.title === comic.title) === -1) { %>
-                                    <i class="fa-regular fa-bookmark"></i> Bookmark
-
+                 <div class="row">
+                    <div class="col-lg-6">
+                        <form action="/comics/add-bookmark" method="post">
+                            <input type="hidden" name="comicId" value="<%= comic._id %>">
+                            <button type="submit" class="btn btn-primary w-100" >
+    
+                                <% if (user) { %>
+                                 
+                                    <% if (user.bookmark.findIndex((bookmarkComic) => bookmarkComic.title === comic.title) === -1) { %>
+                                        <i class="fa-regular fa-bookmark"></i> Bookmark
+    
+                                    <% } else { %>
+                                        <i class="fa-solid fa-bookmark"></i> Bookmarked</button>
+                                    <% } %>
+    
                                 <% } else { %>
-                                    <i class="fa-solid fa-bookmark"></i> Bookmarked</button>
+                                    <i class="fa-regular fa-bookmark"></i> Bookmark
                                 <% } %>
+    
+                               
+                                 
+                    
+                                
+                        </form>
+                      </div>
+    
+                      <div class="col-lg-6">
+                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#ratingModal"><i class="fa-solid fa-star"></i> Edit your Rating</button>
 
-                            <% } else { %>
-                                <i class="fa-regular fa-bookmark"></i> Bookmark
-                            <% } %>
+                        <div class="modal fade rating-modal-container" id="ratingModal" tabindex="-1" aria-labelledby="ratingModal" aria-hidden="true">
+                           <form action="/comics/submit-rating" method="post" id="submitRatingForm">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-5" >Rating</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                   
+                                      <div class="rating">
+                                          <i class="fa-regular fa-star rate"></i>
+                                          <i class="fa-regular fa-star rate"></i>
+                                          <i class="fa-regular fa-star rate"></i>
+                                          <i class="fa-regular fa-star rate"></i>
+                                          <i class="fa-regular fa-star rate"></i>
+                                      </div>
+                                      <input type="hidden" name="ratingNumber">
+                                      <input type="hidden" name="comicId" value="<%= comic._id %>">
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                  </div>
+                                </div>
+                              </div>
+                           </form>
+                          </div>
+                      </div>
+                 </div>
 
-                           
-                             
-                            
-                            
-                            
-                    </form>
+                   
                     
                 </div>
                <div class="col-lg-6">
                     
                     <h5><%= comic.title %></h5>
+                    <div class="rating mb-3">
+                        <% for( let index = 0; index < rating; index++ ) { %>
+                          <i class="fa-solid fa-star"></i>
+                        <% } %>
+  
+                        <% for( let index = 0; index < 5-rating; index++ ) { %>
+                          <i class="fa-regular fa-star"></i>
+                        <% } %>
+                       </div>
                     <% comic.genres.forEach(genre => { %>
                         <span class="badge bg-secondary mb-3"><%= genre.toUpperCase() %></span>
                     <% }) %>
+
+
                     <h6>Synopsis</h6>
                    <p><%= comic.synopsis %></p>
         
@@ -67,6 +116,7 @@
                         </div>
                         
                    </div>
+
         
                   
         
@@ -115,17 +165,48 @@
             </div>
         
             <div class="comic-container">
-                <h4>Comments</h4>
+                <h3>Comments</h3>
                 <hr>
         
-               <div class="row">
-                <div class="col-lg-9">
-                    <input class="form-control" type="text" name="comment" id="comment">
-                </div>
-                <div class="col-lg">
-                    <button class="btn btn-primary w-100"><i class="fa-solid fa-comment"></i> Comment</button>
-                </div>
-               </div>
+              <form action="/comment" method="post" id="comment">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <textarea class="form-control" name="comment" id="comment" cols="30" rows="3"></textarea>
+                        <input type="hidden" name="comicId" value="<%= comic._id %>">
+                        <input type="hidden" name="commentSection" value="comic">
+                    </div>
+                    <div class="col-lg">
+                        <button class="btn btn-primary w-100 h-100"><i class="fa-solid fa-comment"></i> Comment</button>
+                    </div>
+                   </div>
+              </form>
+
+              <hr>
+
+              
+
+              <% comic.comments.forEach(comment => { %>
+                <div class="comic-container row comment">
+                
+                    <div class="col-lg mb-3">
+                        <div class="rounded-circle border d-flex justify-content-center align-items-center" style="width:80px;height:80px" alt="Avatar">
+                            <i class="fas fa-user-alt fa-2x text-info"></i>
+                        </div>
+                    </div>
+    
+                    <div class="col-lg-10">
+                        <h6><%= comment.writer %></h6>
+                        <p><%= moment(comment.createdAt).fromNow() %></p>
+                        <h4><%= comment.body %></h4>
+                    </div>
+    
+                  </div>
+              <% }) %>
+
+
+              
+              
+
             </div>
         </div>
 
@@ -136,7 +217,7 @@
 
             <div class="row">
 
-                <% topPopular.forEach(comic => { %>
+                <% topPopular.forEach((comic, i) => { %>
                   <div class="col-lg-12 row top-popular-item">
                       <div class="col-lg-4">
                           <img src="<%= comic.thumbnail.substring(7) %>" alt="" width="100" height="150" style="display: inline-block;">
@@ -145,10 +226,16 @@
                       <h5><a class="link-title-comic" href="/comics/<%= comic.titlePath %>"><%= comic.title.length > 50 ? comic.title.substring(0, 50) + "..." : comic.title %></a></h5>
   
                      <div class="rating mb-3">
-                      <% for( let index = 0; index < comic.rating; index++ ) { %>
+                      <% for( let index = 0; index < topPopularRating[i]; index++ ) { %>
                         <i class="fa-solid fa-star"></i>
                       <% } %>
+
+                      <% for( let index = 0; index < 5-topPopularRating[i]; index++ ) { %>
+                        <i class="fa-regular fa-star"></i>
+                      <% } %>
                      </div>
+
+                    
   
                       <% comic.genres.forEach(genre => { %>
                           <span class="badge bg-secondary"><%= genre %></span>

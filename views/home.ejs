@@ -1,100 +1,13 @@
 <%- include("partials/header") %>
 <%- include("partials/navbar") %>
 
-<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-       
-        <img class="bd-placeholder-img" src="/images/sololeveling.png" width="100%" height="100%" alt="">
+<main class="container-xl mt-3">
 
-        <div class="container">
-          <div class="carousel-caption text-start">
-            <h1>Example headline.</h1>
-            <p>Some representative placeholder content for the first slide of the carousel.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img class="bd-placeholder-img" src="/images/img2.jpg" width="100%" height="100%" alt="">
-
-        <div class="container">
-          <div class="carousel-caption">
-            <h1>Another example headline.</h1>
-            <p>Some representative placeholder content for the second slide of the carousel.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img class="bd-placeholder-img" src="/images/img3.jpg" width="100%" height="100%" alt="">
-        <div class="container">
-          <div class="carousel-caption text-end">
-            <h1>One more for good measure.</h1>
-            <p>Some representative placeholder content for the third slide of this carousel.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-
-<main class="container-xl">
-
-
-    <!-- <div class="comic-container row">
-        <h5>Popular Today</h2>
-        <hr>
-       <div class="col">
-            <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
-            <h5>Solo Leveling</h5>
-            <p>Chapter 20</p>
-            ⭐️⭐️⭐️⭐️⭐️
-        </div>
-        <div class="col">
-            <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
-            <h5>Solo Leveling</h5>
-            <p>Chapter 20</p>
-            ⭐️⭐️⭐️⭐️⭐️
-        </div>
-        <div class="col">
-            <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
-            <h5>Solo Leveling</h5>
-            <p>Chapter 20</p>
-            ⭐️⭐️⭐️⭐️⭐️
-        </div>
-        <div class="col">
-            <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
-            <h5>Solo Leveling</h5>
-            <p>Chapter 20</p>
-            ⭐️⭐️⭐️⭐️⭐️
-        </div>
-        <div class="col">
-            <img src="/images/sololeveling.png" width="200px" height="250px" alt="">
-            <h5>Solo Leveling</h5>
-            <p>Chapter 20</p>
-            ⭐️⭐️⭐️⭐️⭐️
-        </div>
-        
-    </div> -->
 
     <div class="row">
-        <div class="col-lg-8 me-2">
+        <div class="col-md-8 me-2">
             <div class="comic-container">
-              <h5>Latest Updated</h5>
+              <h5><%= sectionTitle %></h5>
             <hr>
         
             <div class="row latest-update-container">
@@ -102,7 +15,7 @@
               <% comics.forEach(comic => { %>
 
                 <div class="col-lg comic-item row mb-3">
-                  <div class="col-lg">
+                  <div class="col-lg-auto mb-3">
                     <img src="<%= comic.thumbnail.substring(7) %>" alt="">
                   </div>
                   <div class="col-lg">
@@ -126,14 +39,14 @@
     
         </div>
 
-        <div class="col-lg">
+        <div class="col-md">
             <div class="comic-container">
               <h5>Top Popular</h5>
             <hr>
 
             <div class="row">
 
-              <% topPopular.forEach(comic => { %>
+              <% topPopular.forEach((comic, i) => { %>
                 <div class="col-lg-12 row top-popular-item">
                     <div class="col-lg-4">
                         <img src="<%= comic.thumbnail.substring(7) %>" alt="" width="100" height="150" style="display: inline-block;">
@@ -141,11 +54,15 @@
                    <div class="col-lg-8">
                     <h5><a class="link-title-comic" href="/comics/<%= comic.titlePath %>"><%= comic.title.length > 50 ? comic.title.substring(0, 50) + "..." : comic.title %></a></h5>
 
-                   <div class="rating mb-3">
-                    <% for( let index = 0; index < comic.rating; index++ ) { %>
-                      <i class="fa-solid fa-star"></i>
-                    <% } %>
-                   </div>
+                    <div class="rating mb-3">
+                      <% for( let index = 0; index < topPopularRating[i]; index++ ) { %>
+                        <i class="fa-solid fa-star"></i>
+                      <% } %>
+
+                      <% for( let index = 0; index < 5-topPopularRating[i]; index++ ) { %>
+                        <i class="fa-regular fa-star"></i>
+                      <% } %>
+                     </div>
 
                     <% comic.genres.forEach(genre => { %>
                         <span class="badge bg-secondary"><%= genre %></span>

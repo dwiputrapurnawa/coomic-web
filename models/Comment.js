@@ -9,12 +9,16 @@ const commentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    commentSection: {
+        type: String,
+        enum: ["comic", "chapter"]
+    },
+    parentId: String,
 }, {timestamps: true});
 
-commentSchema.add({
-    reply: [commentSchema]
-});
+const Comment = mongoose.model("Comment", commentSchema);
 
 module.exports = {
     commentSchema,
+    Comment,
 }

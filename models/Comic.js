@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const {commentSchema} = require("./Comment");
 const {chapterSchema} = require("./Chapter");
+const {ratingSchema} = require("./Rating");
 
 const comicSchema = new mongoose.Schema({
     title: {
@@ -14,12 +15,7 @@ const comicSchema = new mongoose.Schema({
     author: String,
     chapters: [chapterSchema],
     genres: [String],
-    rating: {
-        type: Number,
-        min: 0,
-        max: 10,
-        default: 0
-    },
+    rating: [ratingSchema],
     status: {
         type: String,
         enum: ["Ongoing", "Complete", "Hiatus", "Dropped", "Coming Soon"]

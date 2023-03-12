@@ -74,4 +74,51 @@ $(function() {
     })
 
 
+    $(".rate").on("mouseenter", function(){
+
+        if($(this).hasClass("fa-regular")) {
+            $(this).removeClass("fa-regular");
+            $(this).addClass("fa-solid");
+            $(this).addClass("selected")
+        } else {
+            $(this).removeClass("fa-solid");
+            $(this).addClass("fa-regular");
+            $(this).removeClass("selected");
+        }
+        
+       
+        
+    })
+
+    $("#submitRatingForm").on("submit", function(){
+
+        $("input[name='ratingNumber']").val($(".selected").length)
+
+    })
+    
+
+    $("#searchBar").on("click", function(){
+        const searchValue = $("input[name='search']").val();
+        const path = `/?search=${searchValue}`;
+
+        window.location.href = path;
+    })
+
+    $("input[name='search']").keypress(function(e) {
+        if(e.which == 13) {
+            $("#searchBar").trigger("click");
+        }
+    })
+
+    $(".account").on("mouseenter", function() {
+        $(".account .fa-user").removeClass("fa-regular");
+        $(".account .fa-user").addClass("fa-solid");
+    })
+
+    $(".account").on("mouseleave", function() {
+        $(".account .fa-user").removeClass("fa-solid");
+        $(".account .fa-user").addClass("fa-regular");
+    })
+
+
 })

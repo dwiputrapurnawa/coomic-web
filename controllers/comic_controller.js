@@ -1,7 +1,9 @@
 const {Comic} = require("../models/Comic");
 const {Chapter} = require("../models/Chapter");
+const {Rating} = require("../models/Rating");
 const User = require("../models/User");
 const moment = require("moment");
+const _ = require("lodash");
 
 const comicPageView = (req, res) => {
 
@@ -91,6 +93,29 @@ const singlePageComicView = (req, res) => {
                     } else {
                         if(foundComic) {
 
+                            let rating;
+
+                            if(foundComic.rating.length) {
+                                const sumOfRating = foundComic.rating.map((item) => item.rating).reduce((a, b) => a+b);
+                                rating = sumOfRating / foundComic.rating.length
+                            } else {
+                                rating = 0;
+                            }
+
+                            let topPopularRating = [];
+
+                            topPopular.forEach(popular => {
+                                if(popular.rating.length) {
+                                    const sumOfRatingPopular = popular.rating.map((item) => item.rating).reduce((a, b) => a+b);
+                                    const ratingPopular = sumOfRatingPopular / popular.rating.length
+
+                                topPopularRating.push(ratingPopular);
+                                } else {
+                                    topPopularRating.push(0)
+                                }
+                            });
+
+                            
 
                             if(req.user) {
 
@@ -100,17 +125,17 @@ const singlePageComicView = (req, res) => {
                                             console.log(err);
                                         } else {
                                             if(user) {
-                                                res.render("comics/comic", {pageName: "comics", comic: foundComic,  user: user, topPopular: topPopular, moment: moment});
+                                                res.render("comics/comic", {pageName: "comics", comic: foundComic, user: user, topPopular: topPopular, moment: moment, rating: rating, topPopularRating: topPopularRating});
                                             }
                                         }
                                     })
                                 } else {
-                                    res.render("comics/comic", {pageName: "comics", comic: foundComic,  user: null, topPopular: topPopular, moment: moment});
+                                    res.render("comics/comic", {pageName: "comics", comic: foundComic, user: null, topPopular: topPopular, moment: moment, rating: rating, topPopularRating: topPopularRating});
                                 }
                                
 
                             } else {
-                                res.render("comics/comic", {pageName: "comics", comic: foundComic,  user: null, topPopular: topPopular, moment: moment});
+                                res.render("comics/comic", {pageName: "comics", comic: foundComic, user: null, topPopular: topPopular, moment: moment, rating: rating, topPopularRating: topPopularRating});
                             }
                         }
                     }
@@ -131,7 +156,7 @@ const readComicView = (req, res) => {
             console.log(err);
         } else {
             if(comic) {
-                res.render("comics/read_comic", {pageName: "comics", comic: comic, user: null, chapterPath: chapterPath});
+                res.render("comics/read_comic", {pageName: "comics", comic: comic, user: null, chapterPath: chapterPath, moment: moment});
             }
         }
     })
@@ -201,9 +226,123 @@ const addBookmark = (req, res) => {
     })
 }
 
+const submitRating = async (req, res) => {
+    const rating = req.body.ratingNumber;
+    const comicId = req.body.comicId;
+
+    if(req.user) {
+
+        if(req.user.role === "User") {
+
+            const user = await User.findById(req.user.id);
+
+            Comic.findById(comicId, (err, comic) => {
+                if(err) {
+                    console.log(err);
+                } else {
+                    if(comic) {
+
+                        ratingIndex = comic.rating.findIndex((rating) => rating.userEmail === user.email);
+
+                        const newRating = new Rating({
+                            rating: rating,
+                            userEmail: user.email,
+                            comicId: comicId
+                        });
+
+                        if(ratingIndex === -1) {
+    
+                            newRating.save((err) => {
+                                if(err) {
+                                    console.log(err);
+                                } else {
+                                    comic.rating.push(newRating);
+                                    comic.save((err) => {
+                                        if(err) {
+                                            console.log(err);
+                                        } else {
+                                            res.redirect("/comics/" + comic.titlePath);
+                                        }
+                                    })
+                                }
+                            })
+                        } else {
+
+                            Rating.findOneAndDelete({userEmail: user.email}, (err) => {
+                                if(err) {
+                                    console.log(err);
+                                } else {
+                                    newRating.save((err) => {
+                                        if(err) {
+                                            console.log(err);
+                                        } else {
+                                            comic.rating[ratingIndex] = newRating;
+                                            comic.save((err) => {
+                                                if(err) {
+                                                    console.log(err);
+                                                } else {
+        
+                                                    res.redirect("/comics/" + comic.titlePath);
+                                                }
+                                            })
+                                        }
+                                    })
+                                }
+                            })
+
+
+
+                            
+                        }
+        
+                      
+
+
+                        
+
+                    }
+                }
+            })
+        } else {
+            res.redirect("/login");
+        }
+    } else {
+        res.redirect("/login");
+    }
+
+   
+}
+
+
+const bookmarkView = (req, res) => {
+    if(req.user) {
+        if(req.user.role === "User") {
+
+            User.findById(req.user.id, (err, user) => {
+                if(err) {
+                    console.log(err);
+                } else {
+                    if(user) {
+
+                        res.render("bookmark", {pageName: "comics", user: user})
+                    }
+                }
+            })
+
+        } else {
+            res.redirect("/login");
+        }
+    } else {
+        res.redirect("/login");
+    }
+}
+
+
 module.exports = {
     comicPageView,
     singlePageComicView,
     readComicView,
     addBookmark,
+    submitRating,
+    bookmarkView,
 }

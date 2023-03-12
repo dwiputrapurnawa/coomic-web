@@ -20,16 +20,32 @@
 
            <div class="row">
             <div class="col-lg-8">
-              <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-              </form>
+   
+                <div class="d-flex">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                <button id="searchBar" class="btn btn-outline-success" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+        
             </div>
 
+            
+
             <% if (user) { %>
-              <div class="col-lg-4 d-flex">
-                <a href="/logout" class="login-button"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+              <div class="col-lg-4 d-flex dropdown">
+              
+          
+                <div class="mb-3" data-bs-toggle="dropdown">
+                  <div class="rounded-circle border d-flex justify-content-center align-items-center account" style="width:30px;height:30px" alt="avatar">
+                    <i class="fa-regular fa-user"></i>
+                  </div>
               </div>
+     
+
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/comics/bookmark"><i class="fa-solid fa-bookmark"></i> Bookmark</a></li>
+                <li><a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+              </ul>
+            </div>
               <% } else { %>
                 <div class="col-lg-4 d-flex">
                   <a href="/login" class="login-button"><i class="fa-solid fa-right-to-bracket"></i> Login</a>

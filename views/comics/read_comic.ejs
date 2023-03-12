@@ -89,18 +89,66 @@
    </div>
 
 
-   <div class="comic-container comment-margin-top">
-    <h2>Comments</h2>
+   <div class="comic-container">
+    <h3>Comments</h3>
     <hr>
 
-   <div class="row">
-    <div class="col-lg-9">
-        <input class="form-control" type="text" name="comment" id="comment">
-    </div>
-    <div class="col-lg">
-        <button class="btn btn-primary w-100"><i class="fa-solid fa-comment"></i> Comment</button>
-    </div>
-   </div>
+  <form action="/comment" method="post" id="comment">
+    <div class="row">
+        <div class="col-lg-9">
+            <textarea class="form-control" name="comment" id="comment" cols="30" rows="3"></textarea>
+            <input type="hidden" name="comicId" value="<%= comic._id %>">
+            <input type="hidden" name="commentSection" value="chapter">
+            
+            <% for( let index = 0; index < comic.chapters.length; index++ ) { %>
+            
+                <% if (comic.chapters[index].chapterPath === chapterPath) { %>
+                    <input type="hidden" name="chapterIndex" value="<%= index %>">
+                <% } %>
+
+            <% } %>
+
+        </div>
+        <div class="col-lg">
+            <button class="btn btn-primary w-100 h-100"><i class="fa-solid fa-comment"></i> Comment</button>
+        </div>
+       </div>
+  </form>
+
+  <hr>
+
+  
+  <% for( let index = 0; index < comic.chapters.length; index++ ) { %>
+
+    <% if (comic.chapters[index].chapterPath === chapterPath) { %>
+     
+        <% comic.chapters[index].comments.forEach(comment => { %>
+
+            <div class="comic-container row comment">
+                
+                <div class="col-lg mb-3">
+                    <div class="rounded-circle border d-flex justify-content-center align-items-center" style="width:80px;height:80px" alt="Avatar">
+                        <i class="fas fa-user-alt fa-2x text-info"></i>
+                    </div>
+                </div>
+
+                <div class="col-lg-10">
+                    <h6><%= comment.writer %></h6>
+                    <p><%= moment(comment.createdAt).fromNow() %></p>
+                    <h4><%= comment.body %></h4>
+                </div>
+
+              </div>
+         
+        <% }) %>
+
+    <% } %>
+  
+  <% } %>
+
+  
+  
+
 </div>
 
     
