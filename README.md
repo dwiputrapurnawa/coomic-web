@@ -1,6 +1,6 @@
 # coomic-web
 
-## Website for read comic online 
+## Screenshot
 
 
 ![Screenshot](screenshot.png)
