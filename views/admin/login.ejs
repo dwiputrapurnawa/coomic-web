@@ -1,6 +1,11 @@
 <%- include("../partials/login_header") %>
 
 <main class="form-signin w-100 m-auto">
+  <% if (error) { %>
+    <div class="alert alert-danger" role="alert">
+     <%= error %>
+    </div>
+  <% } %>
     <form action="/admin/login" method="post">
       <img class="mb-4" src="/images/logo_white.png" alt="" width="150" height="50">
       <h1 class="h3 mb-3 fw-normal">Admin Sign In</h1>

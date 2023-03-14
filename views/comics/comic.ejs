@@ -19,7 +19,7 @@
     
                                 <% if (user) { %>
                                  
-                                    <% if (user.bookmark.findIndex((bookmarkComic) => bookmarkComic.title === comic.title) === -1) { %>
+                                    <% if (user.bookmark.findIndex((bookmarkComic) => bookmarkComic._id.toString() === comic._id.toString()) === -1) { %>
                                         <i class="fa-regular fa-bookmark"></i> Bookmark
     
                                     <% } else { %>

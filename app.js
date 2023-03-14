@@ -8,6 +8,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const session = require("express-session");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const flash = require("express-flash");
 
 const rootRoute = require("./routes/root");
 const comicRoute = require("./routes/comic");
@@ -30,6 +31,8 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
 }));
+
+app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -73,7 +76,7 @@ passport.use("user-login", new LocalStrategy({usernameField: "email", passwordFi
 
             } else {
                 console.log("User not found");
-                return cb(null, false, {message: "User not found"})
+                return cb(null, false, {message: "Incorrect email or password"});
             }
         }
     })
@@ -110,6 +113,7 @@ passport.use("admin-login", new LocalStrategy({usernameField: "email", passwordF
 }));
 
 mongoose.set("strictQuery", false);
+mongoose.set("strictPopulate", false);
 mongoose.connect(process.env.MONGODB_URI, (err) => {
     if(err) {
         console.log(err);
@@ -123,6 +127,9 @@ mongoose.connect(process.env.MONGODB_URI, (err) => {
 app.use("/", rootRoute);
 app.use("/comics", comicRoute);
 app.use("/admin", adminRoute);
+app.use((req, res) => {
+    res.status(404).render("404", {pageName: null, user: null});
+})
 
 
 

@@ -77,7 +77,8 @@ const homePageView = (req, res) => {
 };
 
 const loginPageView = (req, res) => {
-    res.render("login");
+
+    res.render("login", {error: req.flash().error});
 }
 
 const loginUserPost = (req, res) => {
@@ -93,7 +94,7 @@ const loginUserPost = (req, res) => {
         if(err) {
             console.log(err);
         } else {
-            passport.authenticate("user-login", {failureRedirect: "/login"})(req, res, () => {
+            passport.authenticate("user-login", {failureRedirect: "/login", failureFlash: true})(req, res, () => {
                 res.redirect("/");
             })
         }
@@ -101,7 +102,7 @@ const loginUserPost = (req, res) => {
 }
 
 const registerPageView = (req, res) => {
-    res.render("register");
+    res.render("register", {error: req.flash().error});
 }
 
 const registerUserPost = (req, res) => {
@@ -122,13 +123,15 @@ const registerUserPost = (req, res) => {
             newUser.save(err => {
                 if(err) {
                     console.log(err);
+                    req.flash("error", "Email already exist");
+                    res.redirect("/register")
                 } else {
                     console.log("Success created new user");
                     req.login(newUser, err => {
                         if(err) {
                             console.log(err);
                         } else {
-                            passport.authenticate("user-login", {failureRedirect: "/register"})(req, res, () => {
+                            passport.authenticate("user-login", {failureRedirect: "/register", failureFlash: true})(req, res, () => {
                                 res.redirect("/");
                             });
                         }

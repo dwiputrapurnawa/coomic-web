@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
     },
-    bookmark: [comicSchema],
+    bookmark: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comic'}],
     role: {
         type: String,
         enum: ["User"]

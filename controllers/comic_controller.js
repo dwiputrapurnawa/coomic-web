@@ -314,7 +314,7 @@ const submitRating = async (req, res) => {
 }
 
 
-const bookmarkView = (req, res) => {
+const bookmarkView = async (req, res) => {
     if(req.user) {
         if(req.user.role === "User") {
 
@@ -327,7 +327,7 @@ const bookmarkView = (req, res) => {
                         res.render("bookmark", {pageName: "comics", user: user})
                     }
                 }
-            })
+            }).populate("bookmark");
 
         } else {
             res.redirect("/login");

@@ -39,7 +39,7 @@ const uploadChapter = multer({storage: chapterStorage}).array("pages")
 
 
 const adminLoginView = (req, res) => {
-    res.render("admin/login");
+    res.render("admin/login", {error: req.flash().error});
 }
 
 const adminLoginPost = (req, res) => {
@@ -55,7 +55,7 @@ const adminLoginPost = (req, res) => {
         if(err) {
             console.log(err);
         } else {
-            passport.authenticate("admin-login", {failureRedirect: "/admin/login"})(req, res, () => {
+            passport.authenticate("admin-login", {failureRedirect: "/admin/login", failureFlash: true})(req, res, () => {
                 res.redirect("/admin/dashboard");
             });
         }
