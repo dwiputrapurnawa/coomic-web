@@ -29,10 +29,6 @@
                                 <% } else { %>
                                     <i class="fa-regular fa-bookmark"></i> Bookmark
                                 <% } %>
-    
-                               
-                                 
-                    
                                 
                         </form>
                       </div>
@@ -127,39 +123,41 @@
                 <h4>Chapters</h4>
                 <hr>
         
-                <div class="row mb-3">
-                   <div class="col-lg-6 mb-3">
-                    <a class="btn btn-primary custom-button" href="/comics/<%= comic.titlePath %>/<%= comic.chapters[0].chapterPath %>">First Chapter</a>
-                   </div>
-                    <div class="col-lg-6 mb-3">
-                        <a class="btn btn-primary custom-button" href="/comics/<%= comic.titlePath %>/<%= comic.chapters[comic.chapters.length-1].chapterPath %>">New Chapter</a>
-                    </div>
-                </div>
-        
-                <div class="chapter-overflow">
-
-                    <% comic.chapters.reverse().forEach(chapter => { %>
-                        <div class="chapter-container mb-2 me-3">
-                            <a href="/comics/<%= comic.titlePath %>/<%= chapter.chapterPath %>">
-                                <div class="row">
-                                    <div class="col-lg-10">
-                                        <h5>Chapter <%= chapter.number %></h5>
-                                        <p><%= chapter.createdAt.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) %></p>
-                                    </div>
-
-                                    <div class="col-lg">
-                                        <p><%= moment(chapter.createdAt).fromNow() %></p>
-                                    </div>
-                                </div>
-
-                                
-                            </a>
+                <% if (comic.chapters.length !== 0) { %>
+                    <div class="row mb-3">
+                        <div class="col-lg-6 mb-3">
+                         <a class="btn btn-primary custom-button" href="/comics/<%= comic.titlePath %>/<%= comic.chapters[0].chapterPath %>">First Chapter</a>
                         </div>
-                    <% }) %>
-
-                    
-                
-                </div>
+                         <div class="col-lg-6 mb-3">
+                             <a class="btn btn-primary custom-button" href="/comics/<%= comic.titlePath %>/<%= comic.chapters[comic.chapters.length-1].chapterPath %>">New Chapter</a>
+                         </div>
+                     </div>
+             
+                     <div class="chapter-overflow">
+     
+                         <% comic.chapters.reverse().forEach(chapter => { %>
+                             <div class="chapter-container mb-2 me-3">
+                                 <a href="/comics/<%= comic.titlePath %>/<%= chapter.chapterPath %>">
+                                     <div class="row">
+                                         <div class="col-lg-10">
+                                             <h5>Chapter <%= chapter.number %></h5>
+                                             <p><%= chapter.createdAt.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) %></p>
+                                         </div>
+     
+                                         <div class="col-lg">
+                                             <p><%= moment(chapter.createdAt).fromNow() %></p>
+                                         </div>
+                                     </div>
+     
+                                     
+                                 </a>
+                             </div>
+                         <% }) %>
+     
+                         
+                     
+                     </div>
+                <% } %>
                 
                 
             </div>

@@ -26,7 +26,7 @@
         </button>
         <div class="navbar-nav">
           <div class="nav-item text-nowrap">
-            <a class="nav-link px-3" href="/admin/logout"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
+            <a class="nav-link px-3" href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a>
           </div>
         </div>
       </header>
@@ -52,12 +52,6 @@
                     <a class="nav-link <%= pageName === "user_management" ? "active" : null %>" href="/admin/dashboard/user-management">
                         <i class="fa-solid fa-user"></i>
                        User Management
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link <%= pageName === "admin_management" ? "active" : null %>" href="/admin/dashboard/admin-management">
-                        <i class="fa-solid fa-lock"></i>
-                       Admin Management
                     </a>
                   </li>
               </ul>

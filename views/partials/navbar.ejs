@@ -42,6 +42,9 @@
      
 
               <ul class="dropdown-menu">
+                <% if (user.is_admin) { %>
+                  <li><a class="dropdown-item" href="/admin/dashboard"><i class="fa-solid fa-chart-simple"></i> Dashboard</a></li>
+                <% } %>
                 <li><a class="dropdown-item" href="/comics/bookmark"><i class="fa-solid fa-bookmark"></i> Bookmark</a></li>
                 <li><a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
               </ul>

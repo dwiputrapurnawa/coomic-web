@@ -6,7 +6,6 @@ const {Comic} = require("../models/Comic");
 const {Comment} = require("../models/Comment");
 const passport = require("passport");
 const moment = require("moment")
-const mongoose = require("mongoose");
 
 const homePageView = (req, res) => {
 
@@ -117,7 +116,7 @@ const registerUserPost = (req, res) => {
             const newUser = new User({
                 email: email,
                 password: hash,
-                role: "User"
+                is_admin: 0
             });
 
             newUser.save(err => {
@@ -154,93 +153,84 @@ const logout = (req, res) => {
 }
 
 const comment = async (req, res) => {
-    const comment = req.body.comment;
-    const comicId = req.body.comicId;
     
-    if(req.user) {
+    if(req.isAuthenticated()) {
+        const comment = req.body.comment;
+        const comicId = req.body.comicId;
+    
 
-        if(req.user.role === "User") {
+        const user = await User.findById(req.user.id);
 
-            const user = await User.findById(req.user.id);
+                Comic.findById(comicId, (err, comic) => {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        if(comic) {
 
-            Comic.findById(comicId, (err, comic) => {
-                if(err) {
-                    console.log(err);
-                } else {
-                    if(comic) {
-
-                        
-        
-                        if(req.body.commentSection === "comic") {
-
-                            const newComment = new Comment({
-                                body: comment,
-                                writer: user.email,
-                                commentSection: req.body.commentSection,
-                                parentId: comic._id
-                            });
-
-                            newComment.save((err) => {
-                                if(err) {
-                                    console.log(err);
-                                } else {
-                                    comic.comments.push(newComment);
-                                    comic.save((err) => {
-                                        if(err) {
-                                            console.log(err);
-                                        } else {
-                                            res.redirect("/comics/" + comic.titlePath + "#comment");
-                                        }
-                                    })
-                                }
-                            })
-
-                           
-                          
                             
-                        } else if(req.body.commentSection === "chapter") {
-
             
-                            const chapterIndex = req.body.chapterIndex;
+                            if(req.body.commentSection === "comic") {
 
-                            const newComment = new Comment({
-                                body: comment,
-                                writer: user.email,
-                                commentSection: req.body.commentSection,
-                                parentId: comic.chapters[chapterIndex]._id
-                            });
+                                const newComment = new Comment({
+                                    body: comment,
+                                    writer: user.email,
+                                    commentSection: req.body.commentSection,
+                                    parentId: comic._id
+                                });
 
-                            newComment.save((err) => {
-                                if(err) {
-                                    console.log(err);
-                                } else {
-                                    comic.chapters[chapterIndex].comments.push(newComment);
-                                    comic.save((err) => {
-                                        if(err) {
-                                            console.log(err);
-                                        } else {
-                                            res.redirect("/comics/" + comic.titlePath + "/" + comic.chapters[chapterIndex].chapterPath + "#comment");
-                                        }
-                                    })
-                                }
-                            })
+                                newComment.save((err) => {
+                                    if(err) {
+                                        console.log(err);
+                                    } else {
+                                        comic.comments.push(newComment);
+                                        comic.save((err) => {
+                                            if(err) {
+                                                console.log(err);
+                                            } else {
+                                                res.redirect("/comics/" + comic.titlePath + "#comment");
+                                            }
+                                        })
+                                    }
+                                })
 
-                          
+                            
+                            
+                                
+                            } else if(req.body.commentSection === "chapter") {
+
+                
+                                const chapterIndex = req.body.chapterIndex;
+
+                                const newComment = new Comment({
+                                    body: comment,
+                                    writer: user.email,
+                                    commentSection: req.body.commentSection,
+                                    parentId: comic.chapters[chapterIndex]._id
+                                });
+
+                                newComment.save((err) => {
+                                    if(err) {
+                                        console.log(err);
+                                    } else {
+                                        comic.chapters[chapterIndex].comments.push(newComment);
+                                        comic.save((err) => {
+                                            if(err) {
+                                                console.log(err);
+                                            } else {
+                                                res.redirect("/comics/" + comic.titlePath + "/" + comic.chapters[chapterIndex].chapterPath + "#comment");
+                                            }
+                                        })
+                                    }
+                                })
+
+                            
+                            }
+            
                         }
-        
                     }
-                }
-            })
-
-            
-
-
-            
-        } else {
-            res.redirect("/login");
-        }
+                })
     } else {
-        res.redirect("/login");
+        res.redirect("/login")
     }
     
     

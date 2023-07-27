@@ -11,6 +11,7 @@
               <thead>
                 <tr>
                   <th scope="col">Email Address</th>
+                  <th scope="col">Admin</th>
                   <th scope="col">Created At</th>
                   <th scope="col">Action</th>
                 </tr>
@@ -20,6 +21,7 @@
                 <% users.forEach(user => { %>
                   <tr>
                     <th><%= user.email %></th>
+                    <th><%= user.is_admin %></th>
                     <th><%= user.createdAt.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) %></th>
                     <th>
                       <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<%= user._id %>"><i class="fa-solid fa-trash"></i> Delete</button>

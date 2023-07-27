@@ -15,7 +15,6 @@ const comicRoute = require("./routes/comic");
 const adminRoute = require("./routes/admin");
 
 const User = require("./models/User");
-const Admin = require("./models/Admin");
 
 
 const app = express();
@@ -41,7 +40,7 @@ passport.serializeUser(function(user, cb) {
     process.nextTick(function() {
       return cb(null, {
         id: user.id,
-        role: user.role,
+        is_admin: user.is_admin,
       });
     });
   });
@@ -77,36 +76,6 @@ passport.use("user-login", new LocalStrategy({usernameField: "email", passwordFi
             } else {
                 console.log("User not found");
                 return cb(null, false, {message: "Incorrect email or password"});
-            }
-        }
-    })
-}));
-
-passport.use("admin-login", new LocalStrategy({usernameField: "email", passwordField: "password"}, (email, password, cb) => {
-    Admin.findOne({email: email}, (err, foundUser) => {
-        if(err) {
-            console.log(err);
-            return cb(err);
-        } else {
-            if(foundUser) {
-
-                bcrypt.compare(password, foundUser.password, (err, result) => {
-                    if(err) {
-                        console.log(err);
-                        return cb(err);
-                    } else {
-                        if(result) {
-                            return cb(null, foundUser);
-                        } else {
-                            console.log("Incorrect email or password");
-                            return cb(null, false, {message: "Incorrect email or password"});
-                        }
-                    }
-                })
-
-            } else {
-                console.log("User not found");
-                return cb(null, false, {message: "User not found"})
             }
         }
     })

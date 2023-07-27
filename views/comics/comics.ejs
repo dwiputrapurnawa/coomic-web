@@ -88,7 +88,7 @@
       <a class="col-lg-3 mb-3 comic-list-item" href="<%= comic.titlePath %>">
         <img src="<%= comic.thumbnail.substring(7) %>" width="200px" height="250px" alt="">
         <h5><%= comic.title %></h5>
-        <p>Chapter <%= comic.chapters[comic.chapters.length-1].number %></p>
+        <p>Chapter <%= comic.chapters.length !== 0 ? comic.chapters[comic.chapters.length-1].number : " is Not found" %></p>
         <h6><%= comic.status %></h6>
       </a>
     <% }) %>

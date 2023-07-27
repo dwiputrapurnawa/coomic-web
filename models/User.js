@@ -11,10 +11,7 @@ const userSchema = new mongoose.Schema({
         type: String,
     },
     bookmark: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comic'}],
-    role: {
-        type: String,
-        enum: ["User"]
-    }
+    is_admin: Boolean
 }, {timestamps: true});
 
 const User = mongoose.model("User", userSchema);
