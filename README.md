@@ -1,5 +1,5 @@
 # coomic-web
-
+Website for read comic online and build using ExpressJS
 ## Screenshot
 
 <img width="1494" alt="screenshot" src="https://github.com/dwiputrapurnawa/coomic-web/assets/44662864/5f921616-6081-4fe4-a9ea-17ef0aa23978">
